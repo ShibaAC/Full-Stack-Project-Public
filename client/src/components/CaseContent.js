@@ -49,7 +49,7 @@ function CaseContent(props) {
   useEffect(() => {}, []);
   return (
     <div className="case-view">
-      <h2>案件標題 : {caseName}</h2>
+      <h2><span>案件標題</span><span className="case-content-text"> : {caseName}</span></h2>
       {userEqual ? (
         <></>
       ) : (
@@ -72,23 +72,34 @@ function CaseContent(props) {
         </>
       )}
 
-      <h2>
-        地點 : {city}
-        {district}
-      </h2>
-      <h2>預計完成金額 : {budget} 元</h2>
-      <h2>預計完成日期 : {deadline}</h2>
-      <h2>詳細說明 : </h2>
-      <h4>{description}</h4>
+      <h2 className="case-content"><span className="case-content-title">地點</span><span className="case-content-text"> : {city} {district}</span></h2>
+      <h2 className="case-content"><span className="case-content-title">預計完成金額</span><span className="case-content-text"> : </span><span className="case-content-text" style={{color: "#f56666"}}>{budget} 元</span></h2>
+      <h2 className="case-content"><span className="case-content-title">預計完成日期</span><span className="case-content-text"> : {deadline? deadline:"無指定"}</span></h2>
+      <h2 className="case-content"><span className="case-content-title">詳細說明</span><span className="case-content-text"> : </span></h2>
+      <div className="case-detail">
+        <h5 style={{marginTop: '5px', fontWeight: 600}}>{description}</h5>
       {files.map((item, index) => (
         <div key={index}>
-          <img
-            src={`data:image/${fileType(item)}, ${item}`}
-            width={"100"}
-            alt="img"
-          />
+          {item.charAt(0) === "J" || item.charAt(0) === "U" ? (
+            //* PDF 無法顯示
+            <img
+              src={`data:${fileType(item)};base64, ${item}`}
+              width={"200"}
+              alt="pdf"
+            />
+          ) : (
+            <img
+            className="case-content-img"
+              src={`data:${fileType(item)};base64, ${item}`}
+              width={"200"}
+              alt="img"
+            />
+          )}
         </div>
       ))}
+      
+      </div>
+      
     </div>
   );
 }

@@ -1,7 +1,3 @@
-.recordDiv {
-  width: 70%;
-}
-
 .recordDiv1 {
   margin-top: 3rem;
   margin-left: 3rem;
@@ -72,4 +68,9 @@
 
 .recordDiv2:hover > a {
   color: #eee;
+}
+
+.noData {
+  margin-top: 3rem;
+  margin-left: 3rem;
 }

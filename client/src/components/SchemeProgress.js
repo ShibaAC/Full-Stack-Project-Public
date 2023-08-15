@@ -1,13 +1,23 @@
 import React, { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { GlobelDate } from "../App";
 import Scheme from "../axios/Scheme";
+import Payment from "../axios/Payment";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // Scheme 的 component
 function SchemeProgress(props) {
   const navigate = useNavigate();
-  const { setInfoData, currentCaseId } = useContext(GlobelDate);
+  const { setInfoData, currentCaseId, setEcpayHtml } = useContext(GlobelDate);
   const { progressStatus, bidderID, finalPrice } = props;
+
+  // 綠界資訊
+  const [MerchantTradeNo, setMerchantTradeNo] = useState("Test000"); // !不可以空格
+  const [ItemName, setItemName] = useState("案件名稱"); //? 內容
+  const [TotalAmount, setTotalAmount] = useState(finalPrice);
+  const [TradeDesc, setTradeDesc] = useState("案件名稱 * 1"); //? 內容
+
   // 每個階段的 時間與報酬 => 有沒有辦法動態生成
   const [stage1Date, setStage1Date] = useState("");
   const [stage1Price, setStage1Price] = useState(0);
@@ -122,11 +132,38 @@ function SchemeProgress(props) {
     Scheme.newScheme(schemeJson)
       .then((result) => {
         console.log(result);
-        alert(result["data"][0]["result"]);
-        navigate("/personalinfo");
+        toast.info(result["data"][0]["result"], {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+        // alert(result["data"][0]["result"]);
+        // navigate("/personalinfo");
       })
       .catch((err) => {
         console.error(err);
+      });
+
+    //* 綠界取得最終金額
+    Payment.collaboration(
+      MerchantTradeNo,
+      ItemName,
+      TotalAmount,
+      TradeDesc,
+      bidderID
+    )
+      .then((result) => {
+        console.log(result["data"]);
+        setEcpayHtml(result["data"]);
+        navigate("/Ecpay"); // ! 會由綠界跳轉所以不用設定
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
   return (
@@ -171,6 +208,7 @@ function SchemeProgress(props) {
           </button>
         </Link>
       </div>
+      <ToastContainer limit={1}/>
     </>
   );
 }

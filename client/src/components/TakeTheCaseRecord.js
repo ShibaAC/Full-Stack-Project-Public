@@ -43,8 +43,11 @@ function TakeTheCaseRecord(props) {
     }
   }, [takethecase]);
   return (
-    <div className="recordDiv">
-      <div className="d-flex recordDiv1">
+    <div className="infoData">
+      <div
+        className="d-flex recordDiv1"
+        style={{ marginLeft: "3rem", marginRight: "3rem", width: "auto" }}
+      >
         <div
           className="recordDiv2"
           onClick={() => {

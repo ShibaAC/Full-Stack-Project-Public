@@ -18,19 +18,23 @@ function Closed(props) {
     <div>
       {currentRecordCases.length !== 0 ? (
         currentRecordCases.map((item) => (
-          <div className="recordDiv3" key={item['caseID']}>
+          <div
+            className="recordDiv3"
+            style={{ marginLeft: "3rem", marginRight: "3rem", width: "auto" }}
+            key={item["caseID"]}
+          >
             <div className="d-flex align-items-center">
               <span className="span1 flex-grow-1">案件名稱</span>
               <span className="span1 flex-grow-1">成交金額</span>
               <span className="span1 flex-grow-1">結案日期</span>
-              <span className="span1 del1">成交狀態</span>
+              <span className="span1 flex-grow-1 del1">成交狀態</span>
             </div>
             <div className="d-flex align-items-center">
               <span className="span2 flex-grow-1">{item["caseName"]}</span>
               <span className="span2 flex-grow-1">{item["finalMoney"]}</span>
               <span className="span2 flex-grow-1">{item["completeTime"]}</span>
               <span
-                className="span2 del1"
+                className="span2 flex-grow-1 del1"
                 style={{ color: "green" }}
               >
                 {item["caseStatus"]}
@@ -38,8 +42,9 @@ function Closed(props) {
             </div>
           </div>
         ))
-      ) : <h1>尚未結案</h1>}
-
+      ) : (
+        <h1 className="noData">尚未結案</h1>
+      )}
     </div>
   );
 }

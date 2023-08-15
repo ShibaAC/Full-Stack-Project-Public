@@ -27,16 +27,16 @@ class UserController extends Controller
         $userName = $validatedData['userName'];
         $email = $validatedData['email'];
         $password = $validatedData['password'];
-        
+
         // Check if email already exists
         $emailExists = DB::select("SELECT COUNT(*) AS count FROM users WHERE email = ?", [$email])[0]->count;
         if ($emailExists) {
             return response()->json(['message' => 'Email has already registered', 'state' => '400']);
         }
-        
+
         // 將使用者的密碼以安全的方式存儲在資料庫中
         $hashPassword = Hash::make($password);
-        
+
         $result = DB::select("call signUp('$userName', '$email', '$hashPassword')");
         // return $result;
         return response()->json(['result' => $result, 'state' => '200']);
@@ -49,7 +49,7 @@ class UserController extends Controller
             'email' => 'required|string',
             'password' => 'required|string'
         ]);
-        
+
         // 轉成變數
         $email = $validatedData['email'];
         $password = $validatedData['password'];
@@ -160,7 +160,7 @@ class UserController extends Controller
         for($i = 0; $i < 6; $i++){
             $stringNumber .= rand(0, 9);
         }
-        $changeEmail = $request['changeEmail'];        
+        $changeEmail = $request['changeEmail'];
         $emailCheck = DB::select('call emailCheck(?,?)', [$changeEmail, $stringNumber])[0]->result;
         // return $emailCheck;
         if ($emailCheck === 1){
@@ -168,7 +168,7 @@ class UserController extends Controller
             return 1;
         }else{
             return 0;
-        } 
+        }
     }
 
     //忘記密碼比對驗證碼
@@ -187,5 +187,16 @@ class UserController extends Controller
         $hashPassword = Hash::make($password);
         $newPassword = DB::select('call newPassword(?,?)',[$hashPassword, $verCode])[0]->result;
         return $newPassword;
+    }
+
+    //google登入
+    public function googleLogin(Request $request)
+    {
+        // return $request;
+        $userName = $request['userName'];
+        $email = $request['email'];
+        $photoURL = $request['photoURL'];
+        $googleLogin = DB::select('call googleLogin(?,?,?)',[$userName, $email, $photoURL]);
+        return $googleLogin;
     }
 }

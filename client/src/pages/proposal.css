@@ -1,7 +1,9 @@
 .caseBox {
-  width: 40%;
+  max-width: 50%;
+  min-width: 400px;
   margin: 0.5rem auto;
-  background: #4798b3;
+  /* background: #4798b3; */
+  background: rgba(255, 165, 38, 0.5);
   border-radius: 10px;
   padding: 0.5rem;
 }
@@ -36,4 +38,101 @@ label {
 #fileButton:hover {
   background: black;
   color: white;
+}
+
+/* 讓 input 有格式錯誤的動態 */
+input:invalid,
+Input:invalid {
+  /* animation: justshake 1s forwards infinite; */
+  color: red;
+}
+/* @keyframes justshake {
+  25% {
+    transform: translateX(5px);
+  }
+  50% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+  100% {
+    transform: translateX(-5px);
+  }
+} */
+
+#proposal-case-btn,
+#proposal-DraftCase-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  background: #fff;
+  border: 2px solid black;
+  padding: 10px;
+  transition: all 0.4s ease-in;
+  cursor: pointer;
+}
+
+#proposal-case-btn > button {
+  background: #fff;
+  transition: all 0.4s ease-in;
+}
+#proposal-case-btn:hover > button {
+  color: blue;
+}
+#proposal-case-btn:hover {
+  border: 2px solid blue;
+  color: blue;
+}
+
+#proposal-DraftCase-btn {
+  background: rgb(119, 119, 119, 0.5);
+  border: 2px dashed #fff;
+  color: #fff;
+}
+#proposal-DraftCase-btn > button {
+  background: rgb(119, 119, 119, 0);
+  color: #fff;
+  transition: all 0.4s ease-in;
+}
+
+#proposal-DraftCase-btn:hover > button {
+  color: blue;
+}
+#proposal-DraftCase-btn:hover {
+  border: 2px dashed blue;
+  color: blue;
+}
+
+.noLogin {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  color: red;
+  font-size: 4rem;
+  animation: jump 3s;
+  /* animation: justshake 1s forwards infinite; */
+}
+@keyframes jump {
+  0% {
+    transform: translateY(2px);
+  }
+  25% {
+    transform: translateY(-20px);
+  }
+  50% {
+    transform: translateY(2px);
+  }
+  75% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(2px);
+  }
+}
+
+.ant-row {
+  display: block;
 }

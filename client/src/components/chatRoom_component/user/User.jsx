@@ -23,7 +23,7 @@ export default function User({
 
   // 避免字數過多
   const truncateText = (text) => {
-    const textNum = 5;
+    const textNum = 2;
     let shortText = text.substring(0, textNum);
 
     if (text.length > textNum) {

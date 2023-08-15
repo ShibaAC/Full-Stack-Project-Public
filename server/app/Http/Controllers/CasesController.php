@@ -13,7 +13,6 @@ class CasesController extends Controller
     // 提案
     public function insertCase(Request $request)
     {
-
         $caseID = (int)$request['caseID'];
         $userID = (int)$request['userID'];
         $name = $request['name'];
@@ -31,28 +30,31 @@ class CasesController extends Controller
         $status = $request['status'];
         $Files = $request->file('allFiles');
         $allFileName = '';
-        if($Files !== null){
-             // 處理檔案附檔名及轉碼問題
-            $allFileName = 'proposalFiles/'; // 初始設定標頭【proposalFiles/】，自定義的folder name
-            $filesNameArray = []; // 存放所有的檔案包括檔名.副檔名
-            for($i = 0; $i < count($Files); $i++){
-                $fileName = $Files[$i]->getClientOriginalName(); // 檔案名稱
-                $Files[$i]->storeAs('proposalFiles', $fileName); // 將要儲存在 storage 的哪個資料夾名稱
-                $allFileName .= (string)$fileName . ",proposalFiles/"; // 將 加上逗號
-                array_push($filesNameArray, $fileName); // 將 【$fileName】 push to 【$filesNameArray】
+    
+        if ($Files !== null) {
+            foreach ($Files as $file) {
+                $fileName = $file->getClientOriginalName();
+                $newFileName = time() . '_' . $fileName;
+                $fileContents = file_get_contents($file);
+                
+                Storage::disk('s3')->put($newFileName, $fileContents, 'public');
+                
+                $fileUrl = Storage::disk('s3')->url($newFileName);
+                
+                $allFileUrls[] = $fileUrl;
             }
-            $allFileName = substr($allFileName, 0, -15) . ''; // 將最後的【,files/】移除並加上【"】
         }
-        // 為了將其取出
-        // $result = DB::select("CALL newPortfolio($userID, $allFileName)")[0]->result; // file name saved in DB
-        // $filesName = DB::select("select portfolio from myresume where userID = $userID")[0]->portfolio; // get the file name from the DB
+    
         try {
-            $results = DB::select("CALL addMyCase(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", [$caseID,$userID, $name, $category, $subCategory, $budget, $deadline, $city,$subCity, $description, $contactName,$contactAble, $contactPhone, $contactTime, $status, $allFileName]);
+            $results = DB::select("CALL addMyCase(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", [
+                $caseID, $userID, $name, $category, $subCategory, $budget, $deadline, $city, $subCity, 
+                $description, $contactName, $contactAble, $contactPhone, $contactTime, $status, implode(',', $allFileUrls)
+            ]);
+            
             return $results;
         } catch (\Exception $e) {
             return response()->json(['result' => '插入案件失败']);
         }
-        // CALL addMyCase(0,26,'組裝娃娃','B','B02','20000','2025/12/23','g','g09','幫忙組裝娃娃','娃娃女王',1,'0915758668','0110','刊登中','null','null','null','null','null');
     }
 
     // 獲取母、子類別
@@ -212,6 +214,31 @@ class CasesController extends Controller
         $userID =  (int)$request['userID'];
         $results = DB::select('CALL createCollection(?,?)',[$userID,$caseID]);
         return $results;
+    }
+
+    // 進到我的收藏
+    public function collectionList(Request $request)
+    {
+        // return '123';
+        $page = $request['page'];
+        // $pagehead = ($page - 1) * 30;
+        $myuserID = $request['userID'];
+        // 呼叫存儲過程執行 SQL 查詢
+        $results = DB::select('CALL enterCollection(?, ?)', [$myuserID, $page]);
+
+        return response()->json($results);
+    }
+
+
+
+    // 收藏案件icon
+    public function createCollection(Request $request) {
+        $myuserID = $request['userID'];
+        $mycaseID = $request['caseID'];
+        
+        $results = DB::select('CALL createCollection(?, ?)', [$myuserID, $mycaseID]);
+
+        return response()->json($results);
     }
 
 }

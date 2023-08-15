@@ -110,7 +110,7 @@ function Working(props) {
             handleStepConfirm(caseID, deadLine, allSchedule, caseSchedule)
           }
         >
-          完成
+          領收
         </div>
       );
     }
@@ -119,10 +119,12 @@ function Working(props) {
   const [alert1, setAlert1] = useState(0);
   const handleStepConfirm = (caseID, deadLine, allSchedule, caseSchedule) => {
     if (alert1 === 0) {
-      window.confirm("是否確定完成此進度？");
+      window.confirm("是否確定完成此進度？（領收後將撥款至接案者帳戶）");
       setAlert1(!alert1);
     }
-    if (window.confirm("是否確定完成此進度？") == true) {
+    if (
+      window.confirm("是否確定完成此進度？（領收後將撥款至接案者帳戶）") == true
+    ) {
       Auth.stepConfirm(localStorage.getItem("userID"), caseID, deadLine)
         .then((result) => {
           if (
@@ -149,7 +151,7 @@ function Working(props) {
             className="progCircle"
             style={{ backgroundColor: "#4798b3" }}
           ></div>
-          <div className="deadLine">
+          <div className="deadLine" style={{ fontSize: ".9rem" }}>
             {i === 0 ? "成交日期" : "截止日期"}：
             {caseProgress[caseID][i]["stepDeadline"]}
           </div>
@@ -164,6 +166,10 @@ function Working(props) {
             }}
           >
             {caseProgress[caseID][i]["moneyStatus"]}
+          </div>
+          <div className="caseMoney">
+            階段金額：
+            {caseProgress[caseID][i]["money"]}
           </div>
         </div>
       );
@@ -195,7 +201,7 @@ function Working(props) {
             style={{ backgroundColor: "#b8b8b8" }}
           ></div>
 
-          <div className="deadLine">
+          <div className="deadLine" style={{ fontSize: ".9rem" }}>
             截止日期：
             {
               caseProgress[caseID][i + caseProgress[caseID][0]["caseSchedule"]][
@@ -203,7 +209,6 @@ function Working(props) {
               ]
             }
           </div>
-
           <div
             className="right1"
             style={{
@@ -219,6 +224,14 @@ function Working(props) {
             {
               caseProgress[caseID][i + caseProgress[caseID][0]["caseSchedule"]][
                 "moneyStatus"
+              ]
+            }
+          </div>
+          <div className="caseMoney">
+            階段金額：
+            {
+              caseProgress[caseID][i + caseProgress[caseID][0]["caseSchedule"]][
+                "money"
               ]
             }
           </div>
@@ -271,18 +284,24 @@ function Working(props) {
       {currentProposalCases.length !== 0 ? (
         currentProposalCases.map((item, index) => (
           <>
-            <div className="recordDiv31" key={index}>
+            <div
+              className="recordDiv31"
+              style={{ marginLeft: "3rem", marginRight: "3rem", width: "auto" }}
+              key={index}
+            >
               <div className="d-flex align-items-center">
                 <span className="span1 flex-grow-1">案件名稱</span>
                 <span className="span1 flex-grow-1">成交金額</span>
                 <span className="span1 flex-grow-1">成交日期</span>
-                <span className="span1 del1">成交對象</span>
+                <span className="span1 flex-grow-1 del1">成交對象</span>
               </div>
               <div className="d-flex align-items-center">
                 <span className="span2 flex-grow-1">{item["caseName"]}</span>
                 <span className="span2 flex-grow-1">{item["finalMoney"]}</span>
                 <span className="span2 flex-grow-1">{item["dealTime"]}</span>
-                <span className="span2 del1">{item["userName"]}</span>
+                <span className="span2 flex-grow-1 del1">
+                  {item["userName"]}
+                </span>
               </div>
 
               {JSON.parse(localStorage.getItem(`showProg${index}`)) && (
@@ -340,7 +359,7 @@ function Working(props) {
           </>
         ))
       ) : (
-        <h1>尚未進行案件</h1>
+        <h1 className="noData">尚未進行案件</h1>
       )}
     </div>
   );

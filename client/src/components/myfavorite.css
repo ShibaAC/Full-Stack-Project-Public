@@ -1,7 +1,7 @@
 .case1 {
   width: 300px;
-  margin-right: 2rem;
-  margin-bottom: 1.5rem;
+  margin-right: 1.2rem;
+  margin-bottom: 1rem;
   border-radius: 10px;
   min-height: 200px;
   position: relative;
@@ -15,7 +15,6 @@
   flex-wrap: wrap;
   margin-top: 3rem;
   margin-left: 3rem;
-  width: 70%;
 }
 
 .casePag {

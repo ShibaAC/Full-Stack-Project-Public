@@ -140,3 +140,26 @@
   position: relative;
   height: 0;
 }
+
+.caseMoney {
+  display: none;
+}
+
+.right1:hover {
+  cursor: pointer;
+}
+
+.right1:hover + .caseMoney {
+  display: block;
+  font-size: 0.9rem;
+  box-sizing: content-box;
+  width: 150px;
+  position: relative;
+  right: 3rem;
+  bottom: 7.5rem;
+  width: 5rem;
+  border: 2px solid #ffa500;
+  padding: 1rem;
+  background-color: white;
+  border-radius: 10px;
+}

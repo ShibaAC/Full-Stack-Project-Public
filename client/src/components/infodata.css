@@ -8,7 +8,7 @@
   flex-wrap: wrap;
   margin-top: 3rem;
   margin-left: 3rem;
-  width: 60%;
+  margin-right: 5rem;
 }
 
 .color1 {
@@ -152,4 +152,8 @@
 
 .modalSize {
   max-width: 40%;
+}
+
+.infoData {
+  flex-grow: 10;
 }

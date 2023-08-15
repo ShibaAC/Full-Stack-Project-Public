@@ -1,16 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./infodata.css";
-import { Link } from "react-router-dom";
 import { GlobelDate } from "../App";
-import axios from "axios";
 import Auth from "../axios/Auth";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import presetHeadPhoto from "../imgs/head.png";
 
 function InfoData() {
-  // const [modal, setModal] = useState(false);
-  // const handleRevise = () => {
-  //   setModal(true);
-  // };
-
   //修改姓名用
   const [changename, setChangeName] = useState(false);
   //修改密碼用
@@ -26,6 +22,9 @@ function InfoData() {
   const [portfolioMessange, setPortfolioMessange] = useState("");
   const [fileName, setFileName] = useState("");
   const [overFile, setOverFile] = useState();
+  // 顯示圖片檔或PDF
+  const [showModal, setShowModal] = useState(false);
+  const [modalContent, setModalContent] = useState(null);
   //修改擅長工具
   const [changeskills, setChangeSkills] = useState("");
   //修改自傳
@@ -96,7 +95,17 @@ function InfoData() {
       oldpassword
     )
       .then((result) => {
-        window.alert(result["data"]);
+        toast.info(result["data"], {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        //window.alert(result["data"]);
       })
       .catch((err) => {
         console.error(err);
@@ -127,7 +136,17 @@ function InfoData() {
   const handleChangeName = () => {
     Auth.updateUser(JSON.parse(localStorage.getItem("userID")), changename)
       .then((result) => {
-        window.alert(result["data"]["result"]);
+        toast.info(result["data"]["result"], {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        // window.alert(result["data"]["result"]);
         Auth.enterProfile(userinfo).then((result) => {
           setName(result["data"]["message"][0]["userName"]);
         });
@@ -143,7 +162,17 @@ function InfoData() {
       .then((result) => {
         // console.log(result);
         setPhone(result["data"]["phone"]);
-        window.alert(result["data"]["result"][0]["result"]);
+        toast.info(result["data"]["result"][0]["result"], {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        // window.alert(result["data"]["result"][0]["result"]);
       })
       .catch((err) => {
         console.error(err);
@@ -157,7 +186,17 @@ function InfoData() {
       changeexperience
     )
       .then((result) => {
-        window.alert(result["data"]["result"][0]["result"]);
+        toast.info(result["data"]["result"][0]["result"], {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        //window.alert(result["data"]["result"][0]["result"]);
         setExperience(result["data"]["experience"]);
       })
       .catch((err) => {
@@ -176,7 +215,19 @@ function InfoData() {
         // console.log(result);
         setPortfolio(result["data"]["files"]);
         // console.log(portfolio);
-        setPortfolioMessange(window.alert(result["data"]["result"]));
+
+        setPortfolioMessange(
+          toast.info(result["data"]["result"], {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          })
+        );
         setFileName(result["data"]["fileName"]);
         portfolioMessange();
       })
@@ -198,6 +249,18 @@ function InfoData() {
     }
   };
 
+  // 顯示作品集
+  const handleFileClick = (fileUrl) => {
+    console.log("handleFileClick called with fileUrl:", fileUrl);
+
+    if (fileType(fileUrl) === "application/pdf") {
+      window.open(fileUrl, "_blank");
+    } else {
+      setModalContent(<img src={fileUrl} alt="作品集" />);
+      setShowModal(true);
+    }
+  };
+
   //修改擅長工具
   const handleChangeSkills = () => {
     Auth.updateSkills(JSON.parse(localStorage.getItem("userID")), changeskills)
@@ -205,7 +268,17 @@ function InfoData() {
         // console.log(result);
         setTools(result["data"]["skills"]);
         // console.log(tools);
-        window.alert("更新成功！");
+        toast.info("更新成功！", {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        // window.alert("更新成功！");
       })
       .catch((err) => {
         console.error(err);
@@ -220,7 +293,17 @@ function InfoData() {
     )
       .then((result) => {
         setAutobiography(result["data"]["SelfIntroduction"]);
-        window.alert("更新成功！");
+        toast.info("更新成功！", {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        // window.alert("更新成功！");
       })
       .catch((err) => {
         console.error(err);
@@ -228,9 +311,22 @@ function InfoData() {
   };
 
   return (
-    <div className="infoDataDiv d-flex">
+    <div className="infoDataDiv d-flex infoData">
       <div className="headPhotoDiv">
-        <img id="infoImg" src={headphoto} />
+        <img
+          id="infoImg"
+          style={{ objectFit: "cover" }}
+          src={
+            headphoto.charAt(23) === "R" ||
+            headphoto.charAt(23) === "i" ||
+            headphoto.charAt(23) === "/" ||
+            headphoto.charAt(24) === "R" ||
+            headphoto.charAt(24) === "i" ||
+            headphoto.charAt(24) === "/"
+              ? headphoto
+              : presetHeadPhoto
+          }
+        />
         <svg
           type="button"
           xmlns="http://www.w3.org/2000/svg"
@@ -523,6 +619,64 @@ function InfoData() {
               </div>
             </div>
           </div>
+          <hr />
+          <div className="infoDiv1">
+            <label htmlFor="" className="p2">
+              銀行帳戶：
+            </label>
+            <span>808-0015*********</span>
+            <button
+              className="float-right"
+              data-bs-toggle="modal"
+              data-bs-target="#changebank"
+            >
+              修改
+            </button>
+            <div
+              className="modal fade"
+              id="changebank"
+              data-bs-backdrop="static"
+              data-bs-keyboard="false"
+              tabIndex="-1"
+              aria-labelledby="staticBackdropLabel"
+              aria-hidden="true"
+            >
+              <div className="modal-dialog modal-dialog-centered">
+                <div className="modal-content">
+                  <div className="modal-header">
+                    <span className="spanCenter">修改銀行帳戶</span>
+                    <button
+                      type="button"
+                      className="btn-close mx-0"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div className="modal-body">
+                    <div className="my-3">
+                      <label htmlFor="avatar1">請輸入銀行代碼與帳戶：</label>
+                      <input
+                        type="tel"
+                        id="avatar1"
+                        name="avatar"
+                        className="inputText"
+                        required
+                      />
+                    </div>
+                    <button
+                      type="submit"
+                      className="btn btn-primary mx-auto d-block"
+                      data-bs-dismiss="modal"
+                      style={{ marginTop: "24px" }}
+                    >
+                      修改
+                    </button>
+                  </div>
+                  <div className="modal-footer"></div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div className="CVDiv">
@@ -597,7 +751,7 @@ function InfoData() {
             <label htmlFor="" className="p2 flexGrow1">
               作品集
             </label>
-            <span className="portfolio flexGrow2">
+            {/* <span className="portfolio flexGrow2">
               {portfolio.map((file, index) => (
                 <a
                   href={`data:${fileType(file)};base64, ${file}`}
@@ -606,6 +760,26 @@ function InfoData() {
                 >
                   {fileName[index]}
                 </a>
+              ))}
+            </span> */}
+            <span className="portfolio flexGrow2">
+              {portfolio.map((fileUrl, index) => (
+                <div key={index}>
+                  <a
+                    key={index}
+                    href={fileUrl} // 使用 S3 对象 URL 作为链接
+                    target={
+                      fileType(fileUrl) === "application/pdf" ? "_blank" : ""
+                    }
+                    // download={fileName[index]}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleFileClick(fileUrl);
+                    }}
+                  >
+                    {fileName[index]}
+                  </a>
+                </div>
               ))}
             </span>
             <button
@@ -651,13 +825,54 @@ function InfoData() {
                         onChange={(e) => {
                           if (e.target.files.length > 5) {
                             setOverFile(false);
-                            return alert(`最多只能選擇5個檔案，請重新選取`);
+
+                            return toast.warning(
+                              "最多只能選擇5個檔案，請重新選取",
+                              {
+                                position: "top-center",
+                                autoClose: 3000,
+                                hideProgressBar: false,
+                                closeOnClick: true,
+                                pauseOnHover: true,
+                                draggable: true,
+                                progress: undefined,
+                                theme: "light",
+                              }
+                            );
                           } else {
                             setOverFile(true);
                             setChangePortfolio(e.target.files);
                           }
                         }}
                       />
+                      {/*  */}
+                      {/*  */}
+                      {showModal && (
+                        <div
+                          className="modal fade show"
+                          tabIndex="-1"
+                          style={{ display: "block" }}
+                        >
+                          <div className="modal-dialog">
+                            <div className="modal-content">
+                              <div className="modal-header">
+                                <button
+                                  type="button"
+                                  className="btn-close"
+                                  data-bs-dismiss="modal"
+                                  onClick={() => {
+                                    setShowModal(false);
+                                    setModalContent(null);
+                                  }}
+                                ></button>
+                              </div>
+                              <div className="modal-body">{modalContent}</div>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                      {/*  */}
+                      {/*  */}
                     </div>
                     <button
                       type="submit"
@@ -812,6 +1027,7 @@ function InfoData() {
           </div>
         </div>
       </div>
+      <ToastContainer limit={1} />
     </div>
   );
 }

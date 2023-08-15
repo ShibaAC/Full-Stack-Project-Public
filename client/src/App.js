@@ -20,6 +20,8 @@ import Chat from "./axios/Chat";
 import unreadNotificationFunc from "./components/chatRoom_component/notification/unreadNotificationFunc";
 import GetEcpayResult from "./pages/GetEcpayResult";
 import Forgetpwd from "./pages/Forgetpwd";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 localStorage.setItem("text", "hello");
 
@@ -99,13 +101,33 @@ function App() {
           localStorage.setItem("userInfo", JSON.stringify(""));
           //把空字串傳入setUserInfo
           setUserInfo(JSON.parse(localStorage.getItem("")));
-          alert("請重新登入");
+          toast.info('請重新登入', {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+          // alert("請重新登入");
           navigate("/");
         } else if (result["data"] === "未登入") {
           localStorage.setItem("userInfo", JSON.stringify(""));
           //把空字串傳入setUserInfo
           setUserInfo(JSON.parse(localStorage.getItem("")));
-          alert("請重新登入");
+          toast.info('請重新登入', {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+          // alert("請重新登入");
           navigate("/");
         }
       })
@@ -193,6 +215,7 @@ function App() {
         }}
       >
         <Header />
+        <ToastContainer limit={1} />
         <Routes>
           <Route path={"/"} element={<Home />} />
           <Route path={"/login"} element={<Login />} />

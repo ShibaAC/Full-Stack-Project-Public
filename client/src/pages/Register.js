@@ -3,6 +3,8 @@ import "./register.css";
 import { Link, useNavigate } from "react-router-dom";
 import Auth from "../axios/Auth";
 import { GlobelDate } from "../App";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Register() {
   const navigate = useNavigate();
@@ -33,7 +35,16 @@ function Register() {
       .then((result) => {
         console.log(result);
         if (result["data"]["message"] !== "Email has already registered") {
-          window.alert(result["data"]["result"]["0"]["result"]);
+          toast.success('註冊成功', {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
           Auth.login(userEmail, userPassword)
             .then((result) => {
               console.log(result["data"][0]["result"]);
@@ -55,12 +66,32 @@ function Register() {
               console.error(err);
             });
         } else {
-          window.alert(result["data"]["message"]);
+        //   window.alert(result["data"]["message"]);
+          toast.warning('信箱已被註冊', {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+          navigate("/login");
         }
         navigate("/");
       })
       .catch((err) => {
-        window.alert("註冊失敗！");
+        toast.error('註冊失敗！', {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
       });
   };
 
@@ -171,6 +202,7 @@ function Register() {
           </span>
         </div>
       </div>
+      <ToastContainer limit={1}/>
     </div>
   );
 }

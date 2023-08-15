@@ -1,28 +1,199 @@
 .header {
-    width: 100%;
-    height: 70px;
-    background: #ffa500;
-    padding-right: var(--bs-gutter-x, 1.75rem);
-    padding-left: var(--bs-gutter-x, 0.75rem);
-    margin-right: auto;
-    margin-left: auto;
+  width: 100%;
+  height: 70px;
+  border-bottom: 3px solid #4798b3;
+  background: #ffa500;
+  padding-left: var(--bs-gutter-x, 0.75rem);
+  margin-right: auto;
+  margin-left: auto;
+  margin-bottom: 3rem;
 }
 
 a {
-    text-decoration: none;
-    /* 移除超連結的下底線 */
-    font-size: 1.5rem;
-    color: #000;
+  text-decoration: none;
+  /* 移除超連結的下底線 */
+  font-size: 1.5rem;
+  color: #000;
 }
 
 .h50 {
-    height: 70px;
+  height: 70px;
 }
 
 .chatRoomNotification {
-    position: absolute;
-    background-color: red;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
+  position: absolute;
+  background-color: red;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.loginBC {
+  background-color: white;
+  height: 70px;
+  width: 80px;
+  border-bottom: 3px solid #4798b3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.loginBCHover {
+  /* display: block; */
+  padding: 14px;
+  /* justify-content: center; */
+  /* align-items: center; */
+
+  /* text-align: center; */
+  /* padding: 50%; */
+  /* position: relative; */
+  /* top: 17.5px; */
+}
+
+.loginBC > .loginBCHover:hover,
+.RegisterBC > .loginBCHover:hover {
+  color: #ffa500;
+}
+
+.registerBCHover:hover {
+  color: white;
+}
+
+.RegisterBC {
+  background-color: #4798b3;
+  height: 70px;
+  width: 80px;
+  border-bottom: 3px solid #4798b3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.headerBTN1 {
+  padding-left: 3rem;
+  padding-right: 3rem;
+  line-height: "70px";
+  border-left: 2px solid white;
+  color: rgb(63, 63, 63);
+}
+
+.headerBTN1:hover {
+  color: white;
+}
+
+.headerBTN2:hover {
+  color: white;
+}
+
+.headerBTN2 {
+  padding-left: 3rem;
+  padding-right: 3rem;
+  line-height: "70px";
+  border-left: 2px solid white;
+  border-right: 2px solid white;
+  color: rgb(63, 63, 63);
+}
+
+.hbgUl {
+  width: 100%;
+}
+
+.hbg {
+  position: relative;
+  right: 2rem;
+}
+
+.dFlex {
+  display: flex;
+  margin-left: auto;
+}
+
+.rwdPhoto {
+  position: relative;
+  right: 1rem;
+}
+
+@media (max-width: 992px) {
+  .nav-item {
+    background-color: #ffa500;
+    width: 100%;
+  }
+  .headerBTN1 {
+    display: block;
+    text-align: center;
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+    line-height: "70px";
+    border-left: 0 solid white;
+    color: rgb(63, 63, 63);
+  }
+  .headerBTN2 {
+    display: block;
+    text-align: center;
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+    line-height: "70px";
+    border-left: 0 solid white;
+    border-right: 0 solid white;
+    color: rgb(63, 63, 63);
+  }
+  .loginBC {
+    background-color: #ffa500;
+    display: block;
+    text-align: center;
+    width: 100%;
+    height: auto;
+    border-bottom: 0px solid #4798b3;
+  }
+  .loginBCHover {
+    top: 0;
+  }
+  .loginBCHover:hover {
+    color: white;
+  }
+  .loginBC > .loginBCHover:hover,
+  .RegisterBC > .loginBCHover:hover {
+    color: white;
+  }
+  .RegisterBC {
+    background-color: #ffa500;
+    text-align: center;
+    display: block;
+    width: 100%;
+    height: auto;
+    border-bottom: 0px solid #4798b3;
+  }
+  .dFlex {
+    display: block;
+    margin: 0 auto;
+  }
+  .LOGO {
+    width: 90%;
+  }
+  .logoIMG {
+    width: 200px;
+    display: block;
+    margin: 0 auto !important;
+  }
+  .fW {
+    flex-wrap: wrap;
+  }
+  .show1 {
+    position: relative;
+    z-index: 1000;
+    left: -5px;
+    top: 7px;
+  }
+  .rwdPhoto {
+    display: block;
+    margin: 0 auto;
+    right: 0;
+  }
+  .rwdhead {
+    width: 100%;
+  }
+  .rwdWord {
+    text-align: center;
+  }
 }

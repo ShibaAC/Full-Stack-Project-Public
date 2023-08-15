@@ -69,3 +69,8 @@
 .white1:hover {
   color: white;
 }
+
+.noData {
+  margin-top: 3rem;
+  margin-left: 3rem;
+}

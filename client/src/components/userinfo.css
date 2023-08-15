@@ -1,8 +1,51 @@
 .user-info {
-  border: 1px solid #000;
+  position: relative;
+  border: 3px dashed #000000;
+  border-radius: 0.25rem;
   width: 30%;
-  height: 500px;
+  height: 600px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-evenly;
+}
+
+.text-center {
+    font-weight: 800;
+}
+
+.caseOwnerImg {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}
+
+.profile-info{
+    font-size: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.caseOwnerDesc {
+    margin: 5px 30px;
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.caseOwnerDescText {
+    border: 2px solid rgb(88, 88, 88);
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 0;
+    font-size: 16px;
+    height: 40%;
+    inline-size: 320px;
+    overflow-wrap: break-word;
+    overflow-y: scroll;
+}
+
+.alreadyQuotationBtn {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }

@@ -21,6 +21,7 @@ function CaseView() {
   const [district, setDistrict] = useState("");
   const [caseState, setCaseState] = useState("");
   const [contactName, setContactName] = useState("");
+  const [contactPhone, setContactPhone] = useState("");
   const [files, setFiles] = useState([]);
   const [bulidCaseUserID, setBulidCaseUserID] = useState(0);
   const [profilePhoto, setProfilePhoto] = useState("");
@@ -50,6 +51,7 @@ function CaseView() {
         setDistrict(result["data"][0]["district"]);
         setCaseState(result["data"][0]["result"]);
         setContactName(result["data"][0]["contactName"]);
+        setContactPhone(result["data"][0]["contactPhone"])
         setFiles(result["data"][0]["image"]);
         setBulidCaseUserID(result["data"][0]["userID"]);
         setProfilePhoto(result["data"][0]["profilePhoto"]);
@@ -79,11 +81,13 @@ function CaseView() {
           />
           {/* 案主資訊 && 報價區域 */}
           <UserInfo
+            caseName={caseName}
             profilePhoto={profilePhoto}
+            contactPhone={contactPhone}
             budget={budget}
             contactName={contactName}
             caseState={caseState}
-            userEqual={userEqual}
+            bulidCaseUserID={bulidCaseUserID}
           />
         </div>
         {/* 為您推薦 */}

@@ -32,6 +32,8 @@ Route::post('update-portfolio/{myuserID}/{myportfolio}', [InformationController:
 Route::post('update-education', [InformationController::class, 'updateExperience']);
 //修改作品集
 Route::post('update-portfolio', [InformationController::class, 'updatePortfolio']);
+//顯示作品集
+
 //修改擅長工具
 Route::post('update-skills', [InformationController::class, 'updateSkills']);
 //修改自傳
@@ -96,6 +98,7 @@ Route::post('scheme/newCaseStep', [SchemeController::class, 'newCaseStep']); // 
 
 // ECPay
 Route::post('/payment/pay', [PaymentController::class, 'checkout']); // 將資料送給 ECPay
+Route::post('/payment/collaboration', [PaymentController::class, 'collaboration']); //* 合作
 Route::post('/payment/callback', [PaymentController::class, 'callback']); // 取得 ECPay 的回傳資料
 
 //後台
@@ -115,3 +118,13 @@ Route::get('verCodeCheck', [UserController::class, 'verCodeCheck']);
 
 //重設密碼
 Route::get('newPassword', [UserController::class, 'newPassword']);
+
+//google登入
+Route::post('googleLogin',[UserController::class, 'googleLogin']);
+
+
+
+// 進入我的收藏
+Route::post('/enterFavorite', [CasesController::class, 'collectionList']);
+// icon收藏狀態
+Route::post('/collectionState', [CasesController::class, 'createCollection']);

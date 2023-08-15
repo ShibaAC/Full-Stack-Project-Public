@@ -6,7 +6,7 @@
 .case-box {
   width: 300px;
   height: 300px;
-  padding: 5rem;
+  /* padding: 5rem; */
   font-size: 4rem;
   margin: 0 auto;
   border-radius: 10px;
@@ -14,12 +14,72 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  position: relative;
+  bottom: 300px;
 }
 .send-case {
-  background: #ffa500;
+  background-image: url(../imgs/takeCase.jpg);
+  background-size: cover;
+  background-position: center;
+  color: rgba(255, 255, 255, 0.8);
+  transition: 1s;
 }
+
 .get-case {
-  background: #4798b3;
+  background-image: url(../imgs/sendCase.jpg);
+  background-size: cover;
+  background-position: center;
+  color: rgba(255, 165, 0);
+  transition: 1s;
+}
+
+.mask1 {
+  /* padding: 10rem; */
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0);
+  border-radius: 10px;
+  transition: 0.6s;
+}
+
+.caseWord {
+  color: white;
+  text-align: center;
+  margin: 102px 86px;
+  position: relative;
+  z-index: 1000;
+  font-size: 4rem;
+  display: inline-block;
+  transition: 0.6s;
+}
+
+.caseWord:hover + .case-box {
+  transition: 0.6s;
+  transform: scale(1.2);
+}
+
+.get-case:hover {
+  transition: 0.6s;
+  transform: scale(1.2);
+}
+
+.send-case:hover {
+  transition: 0.6s;
+  transform: scale(1.2);
+}
+
+.frameBox {
+  width: 300px;
+  height: 300px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 5px black;
+  transition: 0.6s;
+}
+
+.frameBox:hover {
+  box-shadow: 0 0 20px black;
+  transition: 0.6s;
 }
 
 .homeText {

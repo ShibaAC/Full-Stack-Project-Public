@@ -8,7 +8,11 @@ function Quoted(props) {
     <div>
       {currentRecordCases.length !== 0 ? (
         currentRecordCases.map((item) => (
-          <div className="recordDiv3" key={item["caseID"]}>
+          <div
+            className="recordDiv3"
+            style={{ marginLeft: "3rem", marginRight: "3rem", width: "auto" }}
+            key={item["caseID"]}
+          >
             <div className="d-flex align-items-center">
               <span className="span1 flex-grow-1">案件名稱</span>
               <span className="span1 flex-grow-1">報價金額</span>
@@ -33,8 +37,10 @@ function Quoted(props) {
             </span> */}
             </div>
           </div>
-        ))) : <h1>尚未報價</h1>}
-
+        ))
+      ) : (
+        <h1 className="noData">尚未報價</h1>
+      )}
     </div>
   );
 }

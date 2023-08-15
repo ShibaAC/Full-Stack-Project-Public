@@ -1,15 +1,18 @@
 import React, { useEffect, useState, useContext } from "react";
 import "./AllCase.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Case from "../axios/Case";
+import MenuIndex from "../components/allCaseMenu/MenuIndex";
 import { GlobelDate } from "../App";
 import logoIamge from "../imgs/logo.jpg";
 import bookIamge from "../imgs/proposalFiles/book.jpg";
 import skyIamge from "../imgs/proposalFiles/1.jpg";
+import { Button, Menu, Space } from "antd";
 
 function AllCase() {
   // 取得全域變數
   const { setCurrentCaseId } = useContext(GlobelDate);
+  const navigate = useNavigate();
 
   // 處理頁數
   const [page, setPage] = useState(1);
@@ -24,6 +27,7 @@ function AllCase() {
   const [bigCityStr, setBigCityStr] = useState("null"); // 儲存所有被點選的資料
   const [subCityID, setSubCityID] = useState(""); // 目前點選的資料
   const [subCityStr, setSubCityStr] = useState("null"); // 儲存所有被點選的資料
+  const [subCityArr, setSubCityArr] = useState([]); // 儲存所有被點選的資料 陣列型別
 
   const [cases, setCases] = useState([]); // 利用useEffect 獲得資料
 
@@ -38,6 +42,15 @@ function AllCase() {
   const subCityNames = JSON.parse(localStorage.getItem("subCityNames"));
 
   useEffect(() => {
+    // setSubCityArr((preState) => [{ ...preState, subCityStr }]);
+    // let a = subCityNames.filter((item) => {
+    //   subCityArr.map((subCity) => {
+    //     if (item["districtID"] === subCity) {
+    //       return item["district"];
+    //     }
+    //   });
+    // });
+    // console.log(a);
     // 畫面一掛載從資料庫取得所有案件
     Case.getCases(bigClassStr, subClassStr, bigCityStr, subCityStr, page)
       .then((result) => {
@@ -49,100 +62,6 @@ function AllCase() {
       });
   }, [bigClassID, subClassID, bigCityID, subCityID, page]);
 
-  // 處理母類別的字串
-  const handleBigClass = (id) => {
-    setBigClassID(id);
-    if (bigClassStr.indexOf(id) === -1) {
-      // 進到頁面是否為第一次做篩選，為了避免,號
-      if (bigClassStr === "null" || bigClassStr === "") {
-        setBigClassStr(bigClassStr.replace("null", `${id}`)); // 將初始的null替換掉
-      } else {
-        setBigClassStr((preState) => preState + "," + id);
-      }
-    }
-    // 假如重複點選判斷狀態
-    if (bigClassStr.match(id)) {
-      if (bigClassStr.indexOf(`${id},`) !== -1) {
-        setBigClassStr(bigClassStr.replace(`${id},`, "")); // 處理【A01,】這種狀態
-      } else if (bigClassStr.indexOf(`,${id}`) !== -1) {
-        setBigClassStr(bigClassStr.replace(`,${id}`, "")); // 處理【,A01】這種狀態
-      } else {
-        setBigClassStr("null"); // 處理【A01】這種狀態=> 這會報錯
-      }
-    }
-  };
-
-  // 處理子類別的字串
-  const handleSubClass = (e) => {
-    const { id } = e.target; // 取得代號
-    setSubClassID(id);
-    if (subClassStr.indexOf(id) === -1) {
-      // 進到頁面是否為第一次做篩選，為了避免,號
-      if (subClassStr === "null" || subClassStr === "") {
-        setSubClassStr(subClassStr.replace("null", `${id}`)); // 將初始的null替換掉
-      } else {
-        setSubClassStr((preState) => preState + "," + id);
-      }
-    }
-    // 假如重複點選判斷狀態
-    if (subClassStr.match(id)) {
-      if (subClassStr.indexOf(`${id},`) !== -1) {
-        setSubClassStr(subClassStr.replace(`${id},`, "")); // 處理【A01,】這種狀態
-      } else if (subClassStr.indexOf(`,${id}`) !== -1) {
-        setSubClassStr(subClassStr.replace(`,${id}`, "")); // 處理【,A01】這種狀態
-      } else {
-        setSubClassStr("null"); // 處理【A01】這種狀態=> 這會報錯
-      }
-    }
-  };
-
-  // 處理母地區的字串
-  const handlebigCity = (id) => {
-    setBigCityID(id);
-    if (bigCityStr.indexOf(id) === -1) {
-      // 進到頁面是否為第一次做篩選，為了避免,號
-      if (bigCityStr === "null" || bigCityStr === "") {
-        setBigCityStr(bigCityStr.replace("null", `${id}`)); // 將初始的null替換掉
-      } else {
-        setBigCityStr((preState) => preState + "," + id);
-      }
-    }
-    // 假如重複點選判斷狀態
-    if (bigCityStr.match(id)) {
-      if (bigCityStr.indexOf(`${id},`) !== -1) {
-        setBigCityStr(bigCityStr.replace(`${id},`, "")); // 處理【A01,】這種狀態
-      } else if (bigCityStr.indexOf(`,${id}`) !== -1) {
-        setBigCityStr(bigCityStr.replace(`,${id}`, "")); // 處理【,A01】這種狀態
-      } else {
-        setBigCityStr("null"); // 處理【A01】這種狀態=> 這會報錯
-      }
-    }
-  };
-
-  // 處理子地區的字串
-  const handleSubCity = (e) => {
-    const { id } = e.target; // 取得代號
-    setSubCityID(id);
-    if (subCityStr.indexOf(id) === -1) {
-      // 進到頁面是否為第一次做篩選，為了避免,號
-      if (subCityStr === "null" || subCityStr === "") {
-        setSubCityStr(subCityStr.replace("null", `${id}`)); // 將初始的null替換掉
-      } else {
-        setSubCityStr((preState) => preState + "," + id);
-      }
-    }
-    // 假如重複點選判斷狀態
-    if (subCityStr.match(id)) {
-      if (subCityStr.indexOf(`${id},`) !== -1) {
-        setSubCityStr(subCityStr.replace(`${id},`, "")); // 處理【A01,】這種狀態
-      } else if (subCityStr.indexOf(`,${id}`) !== -1) {
-        setSubCityStr(subCityStr.replace(`,${id}`, "")); // 處理【,A01】這種狀態
-      } else {
-        setSubCityStr("null"); // 處理【A01】這種狀態=> 這會報錯
-      }
-    }
-  };
-
   return (
     <main className="container my-4">
       <div className="takeTheCaseBox d-flex">
@@ -152,118 +71,45 @@ function AllCase() {
           <>
             {/* 左側篩選欄 */}
             <div className="condition mx-3" id="accordion city">
-              {/* 類別 */}
-              {bigClassNames.map((items, index) => (
-                <div className="mb-3" key={index}>
-                  <button
-                    className="btn btn-secondary w-100"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target={`#${items.bigClassName}`}
-                    data-bs-id={`${items.bigClassID}`} // 賦予代號
-                    aria-expanded="false"
-                    aria-controls={`${items.bigClassName}`}
-                    onClick={(e) => {
-                      handleBigClass(e.target.dataset["bsId"]);
-                    }}
-                  >
-                    {items.bigClassName}
-                  </button>
-                  <div
-                    className="collapse multi-collapse"
-                    id={`${items.bigClassName}`}
-                  >
-                    <div className="card card-body">
-                      <ul className="list-group">
-                        {subBigClassNames.map((item, index) => (
-                          <>
-                            {item["bigClassID"] === items.bigClassID && (
-                              <li className="list-group-item p-0" key={index}>
-                                <input
-                                  type="checkbox"
-                                  id={`${item.classID}`}
-                                  name={`${item.bigClassID}`}
-                                  onClick={(e) => {
-                                    handleSubClass(e);
-                                  }}
-                                />
-                                <label htmlFor={`${item.classID}`}>
-                                  {item.className}
-                                </label>
-                              </li>
-                            )}
-                          </>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              ))}
-              {/* 地區 */}
-              <button
-                className="btn btn-secondary w-100"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target={`#location`}
-                aria-expanded="false"
-                aria-controls={`location`}
-              >
-                地區
-              </button>
-              {bigCityNames.map((items, index) => (
-                <div className="mb-3 mt-2" key={index}>
-                  <div
-                    id={`location`}
-                    className="collapse btn btn-primary multi-collapse w-75"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target={`#${items.cityID}`}
-                    data-bs-id={`${items.cityID}`} // 賦予代號
-                    aria-expanded="false"
-                    aria-controls={`${items.cityID}`}
-                    onClick={(e) => {
-                      handlebigCity(e.target.dataset["bsId"]); // 取得代號
-                    }}
-                  >
-                    {items.city}
-                  </div>
-                  <div
-                    className="collapse multi-collapse"
-                    id={`${items.cityID}`}
-                  >
-                    <div className="card card-body">
-                      <ul className="list-group">
-                        {subCityNames.map((item, index) => (
-                          <>
-                            {item["cityID"] === items.cityID && (
-                              <li className="list-group-item p-0" key={index}>
-                                <input
-                                  type="checkbox"
-                                  id={`${item.districtID}`}
-                                  name={`${item.cityID}`}
-                                  onClick={(e) => {
-                                    handleSubCity(e);
-                                  }}
-                                />
-                                <label htmlFor={`${item.districtID}`}>
-                                  {item.district}
-                                </label>
-                              </li>
-                            )}
-                          </>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              ))}
+              <MenuIndex
+                bigClassNames={bigClassNames}
+                subBigClassNames={subBigClassNames}
+                bigCityNames={bigCityNames}
+                subCityNames={subCityNames}
+                setBigClassID={setBigClassID}
+                bigClassID={bigClassID}
+                setBigClassStr={setBigClassStr}
+                bigClassStr={bigClassStr}
+                subClassID={subClassID}
+                setSubClassID={setSubClassID}
+                subClassStr={subClassStr}
+                setSubClassStr={setSubClassStr}
+                bigCityID={bigCityID}
+                setBigCityID={setBigCityID}
+                bigCityStr={bigCityStr}
+                setBigCityStr={setBigCityStr}
+                subCityID={subCityID}
+                setSubCityID={setSubCityID}
+                subCityStr={subCityStr}
+                setSubCityStr={setSubCityStr}
+              />
             </div>
             {/* 右側接案區 */}
+
             <div className="allCaseBox">
+              {/* {subCityStr} */}
               {/* 顯示案子 */}
-              <section className="d-flex flex-wrap">
+              <section className="case-div">
                 {cases.map((item) => (
-                  <div className="case p-2" key={item.caseID}>
+                  <div
+                    className="case p-2"
+                    key={item.caseID}
+                    onClick={() => {
+                      // 取得當前點擊的case ID，並導向至caseview
+                      setCurrentCaseId(item.caseID);
+                      navigate(`/caseview/${item.caseID}`);
+                    }}
+                  >
                     {/* 依母類別的預設圖 */}
                     {item.image !== null ? (
                       <img
@@ -279,13 +125,15 @@ function AllCase() {
                       <img src={bookIamge} alt="img" className="mb-3" />
                     )}
                     <p>案件標題 : {item.caseName}</p>
-                    <p>
-                      地點: {item.city}
-                      {item.district}
-                    </p>
+                    {item.city && (
+                      <p>
+                        地點: {item.city}
+                        {item.district}
+                      </p>
+                    )}
                     <p>預算: {item.budget}</p>
-                    <p>預計完成日期: {item.deadline}</p>
-                    <Link
+                    <p>預計完成日期: {item.deadline? item.deadline: "無指定"}</p>
+                    {/* <Link
                       className="moreView"
                       to={`/caseview/${item.caseID}`}
                       data-caseid={item.caseID}
@@ -296,34 +144,49 @@ function AllCase() {
                       }}
                     >
                       more view
-                    </Link>
+                    </Link> */}
+                    <div className="d-flex justify-content-center">
+                      <Space wrap>
+                        <Button> 查看更多 </Button>
+                      </Space>
+                    </div>
                   </div>
                 ))}
               </section>
               {/* 顯示page */}
               <ul className="pagination">
                 <li className="page-item">
-                  <p className="page-link" href="#" aria-label="Previous">
+                  <p
+                    className="page-link"
+                    href="#"
+                    aria-label="Previous"
+                    onClick={() => setPage(page - 1)}
+                  >
                     <span aria-hidden="true">&laquo;</span>
                   </p>
                 </li>
                 <li className="page-item">
-                  <p className="page-link" href="#">
+                  <p className="page-link" onClick={() => setPage(1)}>
                     1
                   </p>
                 </li>
                 <li className="page-item">
-                  <p className="page-link" href="#">
+                  <p className="page-link" onClick={() => setPage(2)}>
                     2
                   </p>
                 </li>
                 <li className="page-item">
-                  <p className="page-link" href="#">
+                  <p className="page-link" onClick={() => setPage(3)}>
                     3
                   </p>
                 </li>
                 <li className="page-item">
-                  <p className="page-link" href="#" aria-label="Next">
+                  <p
+                    className="page-link"
+                    href="#"
+                    aria-label="Next"
+                    onClick={() => setPage(page + 1)}
+                  >
                     <span aria-hidden="true">&raquo;</span>
                   </p>
                 </li>

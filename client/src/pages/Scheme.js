@@ -3,6 +3,8 @@ import "./scheme.css";
 import SchemeProgress from "../components/SchemeProgress";
 import { Link, useParams } from "react-router-dom";
 import { GlobelDate } from "../App";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Scheme() {
   // 從網址取得 bidder ID
@@ -14,7 +16,17 @@ function Scheme() {
   const handleFinalPrice = (event) => {
     // 判斷是否低於最低價位，先假設最低金額500
     if (event.target.value < 500) {
-      alert("低於最低價位 500");
+        toast.warning('低於最低價位 500', {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+      // alert("低於最低價位 500");
       event.target.value = 500;
       return setFinalPrice(500);
     }
@@ -23,11 +35,31 @@ function Scheme() {
   const handleScheme = (event) => {
     // 判斷是否高於排程階段
     if (event.target.value < 1) {
-      alert("排程階段不正確");
+        toast.warning('排程階段不正確', {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+      // alert("排程階段不正確");
       return (event.target.value = 1);
     }
     if (event.target.value > 6) {
-      alert("最多排程6階段");
+        toast.warning('最多排程6階段', {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+      // alert("最多排程6階段");
       return (event.target.value = 6);
     }
     setProgressStage(event.target.value);
@@ -36,7 +68,7 @@ function Scheme() {
     <main className="container">
       <div className="scheme-box">
         {/* 金額 */}
-        {/* <div className="box">
+        <div className="box">
           <h4>最終金額 :</h4>
           <input
             min={500}
@@ -45,7 +77,7 @@ function Scheme() {
             placeholder="請輸入最終的金額"
             onBlur={handleFinalPrice} // 假如失去焦點時會提醒是否低於最低價位
           />
-        </div> */}
+        </div>
 
         {/* 進度排程 */}
         <div className="box">
@@ -69,6 +101,7 @@ function Scheme() {
           />
         )}
       </div>
+      <ToastContainer limit={1}/>
     </main>
   );
 }

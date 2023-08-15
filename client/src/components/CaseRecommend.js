@@ -4,11 +4,12 @@ import { GlobelDate } from "../App";
 import { Link, useNavigate } from "react-router-dom";
 import Case from "../axios/Case";
 import Chat from "../axios/Chat";
-import { io } from "socket.io-client"
+import { io } from "socket.io-client";
 
 function CaseRecommend(porps) {
   // 取得全域變數
-  const { currentCaseId, setCurrentCaseId, setChatChatUser } = useContext(GlobelDate);
+  const { currentCaseId, setCurrentCaseId, setChatChatUser } =
+    useContext(GlobelDate);
 
   // 從 props 結構賦值
   const { userEqual } = porps;
@@ -52,12 +53,12 @@ function CaseRecommend(porps) {
 
   // * Socket.io 連線
   useEffect(() => {
-      const newSocket = io("http://localhost:4000");
-      setSocket(newSocket);
+    const newSocket = io("http://localhost:4000");
+    setSocket(newSocket);
 
-      return () => {
-          newSocket.disconnect();
-      }
+    return () => {
+      newSocket.disconnect();
+    };
   }, [currentUserID]);
 
   const handleChat = (item) => {
@@ -70,13 +71,13 @@ function CaseRecommend(porps) {
       .catch((err) => {
         console.error(err);
       });
-    
+
     if (socket === null) return;
     socket.emit("sendMessage", {
-        senderId: currentUserID,
-        receiverId: item.userID,
-        text: "hi",
-    })
+      senderId: currentUserID,
+      receiverId: item.userID,
+      text: "hi",
+    });
 
     navigate("/ChatRoom", setChatChatUser(item));
   };
@@ -88,7 +89,7 @@ function CaseRecommend(porps) {
   return (
     <div className="recommend">
       <div className="recommend-tile">
-        <h1>{userEqual ? "報價人員" : "為您推薦案子"}</h1>
+        <h1 style={{fontWeight: 800}}>{userEqual ? "報價人員" : "為您推薦案子"}</h1>
       </div>
       <div className="recommend-content">
         {/* 三元表達式 假如【userEqual】為【True】就執行【:】前面，反之【userEqual】為【False】就執行【:】後面 */}
@@ -96,7 +97,7 @@ function CaseRecommend(porps) {
           // 以案主身分查看自己的提案 => 報價人員
           <>
             {bridder.length === 0 ? (
-              <h1>尚未有人報價</h1>
+              <h1 className="d-flex justify-content-center ">尚未有人報價</h1>
             ) : (
               bridder.map((item, index) => (
                 <div className="recommend-content-box" key={index}>
@@ -133,17 +134,18 @@ function CaseRecommend(porps) {
                   key={item["caseID"]}
                   onClick={() => handleDrictCaseView(item["caseID"])}
                 >
-                  <p>{item.caseName}</p>
-                  <p>{item.budget}</p>
-                  <p>{item.deadline}</p>
+                  <p>案件標題: {item.caseName}</p>
                   <p>
+                  地點: 
                     {item.city}
                     {item.district}
                   </p>
+                  <p>預計完成金額: {item.budget}</p>
+                  <p>預計完成時間: {item.deadline}</p>
                 </div>
               ))
             ) : (
-              <h1>無相關案件</h1>
+              <h1 className="d-flex justify-content-center ">無相關案件</h1>
             )}
           </>
         )}

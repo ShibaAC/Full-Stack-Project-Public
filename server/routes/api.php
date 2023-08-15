@@ -101,6 +101,10 @@ Route::post('/payment/callback', [PaymentController::class, 'callback']); // 取
 //後台
 Route::get('backstage/alluser', [backstageController::class, 'rootCheckUser']); //去backstageController叫function rootCheckUserphp
 Route::get('backstage/allcase', [backstageController::class, 'rootCheckCase']); 
+Route::post('backstage/deluser', [backstageController::class, '']);//ban使用者
+Route::post('backstage/delcase', [backstageController::class, 'rootDelCase']);//下架案件
+// Route::get('backstage/allcase', [backstageController::class, 'rootCheckCase']); 
+Route::get('backstage/CasePage', [backstageController::class, 'rootCasePage']);//取案件頁數
 
 
 //忘記密碼

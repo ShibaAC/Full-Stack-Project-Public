@@ -10,14 +10,26 @@ class back {
     // 現在要註冊所以要用 【post】
     // axios.method('網址',{ 傳給後端的參數 })
     return axios.get(API_URL + "/backstage/alluser", {
-      page,
+      params: {
+        page,
+      },
     });
   }
 
   allcase(page) {
     return axios.get(API_URL + "/backstage/allcase", {
-      page,
+      params: {
+        page,
+      },
     });
+  }
+  delcase(caseID) {
+    return axios.post(API_URL + "/backstage/delcase", {
+      caseID,
+    });
+  }
+  getcasepage() {
+    return axios.get(API_URL + "/backstage/CasePage", {});
   }
 }
 export default new back();

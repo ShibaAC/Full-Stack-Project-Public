@@ -18,8 +18,20 @@ class backstageController extends Controller
         public function rootCheckCase(Request $request)
         {
             $page = $request['page'];
+            // return $request;
             $results = DB::select('CALL rootCheckAllCase(?)' , [$page]);
             return response()->json($results);
         }
+        public function rootDelCase(Request $request)
+        {
+            $caseID = $request['caseID'];
+            $results = DB::select('CALL rootDelCase(?)' , [$caseID]);
+            return response()->json($results);
+        }
 
+        public function rootCasePage(Request $request)
+        {
+            $results = DB::select('CALL rootCasePage()');
+            return response()->json($results);
+        }
 }

@@ -82,6 +82,9 @@ function App() {
 
   // 存取綠界返回的原始碼 => 【UserInfo】 取得 ，【Ecpay】渲染
   const [ecpayHtml, setEcpayHtml] = useState("");
+  //後台
+  const [AllCase1, setAllCase1] = useState([]);
+  const [totalPages, setTotalPages] = useState(0); // Add this state
 
   useEffect(() => {
     //進入前，先比對token
@@ -138,6 +141,10 @@ function App() {
       {/* 提供 GlobelDate 內的所有資料給被包含的所有組件 */}
       <GlobelDate.Provider
         value={{
+          totalPages,
+          setTotalPages,
+          AllCase1,
+          setAllCase1,
           usernumber,
           setUserNumber,
           phone,
@@ -181,8 +188,8 @@ function App() {
           notifications,
           setNotifications,
           unreadNotifications,
-          chatChatUser, 
-          setChatChatUser
+          chatChatUser,
+          setChatChatUser,
         }}
       >
         <Header />

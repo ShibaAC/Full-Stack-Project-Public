@@ -12,7 +12,14 @@ function UserInfo(props) {
   // 取得全域變數
   const { setInfoData, currentCaseId, setEcpayHtml } = useContext(GlobelDate);
   // 從 CaseView 取得資料
-  const { caseName, contactName, contactPhone, caseState, bulidCaseUserID, profilePhoto } = props;
+  const {
+    caseName,
+    contactName,
+    contactPhone,
+    caseState,
+    bulidCaseUserID,
+    profilePhoto,
+  } = props;
 
   // caseID , userID , quotation , win , selfRecommended
   const [quotation, setQuotation] = useState(0); // 報價金額
@@ -24,7 +31,6 @@ function UserInfo(props) {
   // const [ItemName, setItemName] = useState("Test123");
   const [ItemName, setItemName] = useState(caseName);
   const [TotalAmount, setTotalAmount] = useState(50);
-  // const [TradeDesc, setTradeDesc] = useState("Test123");
   const [TradeDesc, setTradeDesc] = useState(`${caseName} 50元 * 1`);
 
   // 案主資訊 ------------
@@ -32,14 +38,13 @@ function UserInfo(props) {
   const [caseOwnerIntro, setCaseOwnerIntro] = useState(null);
 
   useEffect(() => {
-    Auth.checkProfile(bulidCaseUserID)
-      .then((result) => {
-        console.log("checkProfile", result);
-        if (result["data"].length !== 0) {
-            setCaseOwnerEdu(result["data"][0]["education"]);
-            setCaseOwnerIntro(result["data"][0]["selfIntroduction"]);
-        }
-      })
+    Auth.checkProfile(bulidCaseUserID).then((result) => {
+      console.log("checkProfile", result);
+      if (result["data"].length !== 0) {
+        setCaseOwnerEdu(result["data"][0]["education"]);
+        setCaseOwnerIntro(result["data"][0]["selfIntroduction"]);
+      }
+    });
   }, [bulidCaseUserID]);
 
   const fileType = (file) => {
@@ -83,7 +88,7 @@ function UserInfo(props) {
         console.error(error);
         alert(error);
       });
-   };
+  };
   return (
     <div className="user-info">
       {/* 案主資訊 */}
@@ -101,12 +106,22 @@ function UserInfo(props) {
         </div>
       </div>
       <div className="caseOwnerDesc">
-        <p style={{marginBottom: 0}}>案主學歷: <span style={{fontSize: "16px"}}>{caseOwnerEdu? caseOwnerEdu : "無資訊"}</span></p>
-        <p style={{marginBottom: 0}}>案主簡介: </p>
-        <p className="caseOwnerDescText">{caseOwnerIntro? caseOwnerIntro : "無資訊"}</p>
-        {caseState === "已報價" && (<p>聯絡電話: <span>{contactPhone? contactPhone : "無資訊"}</span></p>)}
+        <p style={{ marginBottom: 0 }}>
+          案主學歷:{" "}
+          <span style={{ fontSize: "16px" }}>
+            {caseOwnerEdu ? caseOwnerEdu : "無資訊"}
+          </span>
+        </p>
+        <p style={{ marginBottom: 0 }}>案主簡介: </p>
+        <p className="caseOwnerDescText">
+          {caseOwnerIntro ? caseOwnerIntro : "無資訊"}
+        </p>
+        {caseState === "已報價" && (
+          <p>
+            聯絡電話: <span>{contactPhone ? contactPhone : "無資訊"}</span>
+          </p>
+        )}
       </div>
-
 
       {/* 假如未報價介面 */}
       {caseState === "未報價" && (
@@ -170,7 +185,10 @@ function UserInfo(props) {
       {/* 需再調整 */}
       {caseState === "已報價" && (
         <>
-          <button type="button" className="btn btn-secondary alreadyQuotationBtn">
+          <button
+            type="button"
+            className="btn btn-secondary alreadyQuotationBtn"
+          >
             已報價
           </button>
         </>

@@ -6,6 +6,10 @@
    ```
    npm i react-scripts
    ```
+2. 因header.js新增icon關係，需安裝
+   ```
+   npm install react-icons
+   ```
 
 ## laravel 問題
 

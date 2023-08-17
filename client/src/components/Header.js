@@ -8,6 +8,8 @@ import headerLogo from "../imgs/header_logo.png";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import presetHeadPhoto from "../imgs/head.png";
+import { FaSearch } from "react-icons/fa";
+
 
 function Header() {
   const {
@@ -104,8 +106,8 @@ function Header() {
                     {/* <FaSearch
                       className="search-icon"
                       size={24}
-                      onClick={handleSearch}
-                    /> */}
+                      // onClick={handleSearch}
+                    />
                   </div>
                   <div className="dropdown ms-auto">
                     <Link

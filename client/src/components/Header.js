@@ -104,7 +104,7 @@ function Header() {
                     <FaSearch
                       className="search-icon"
                       size={24}
-                      onClick={handleSearch}
+                      // onClick={handleSearch}
                     />
                   </div>
                 <div className="dropdown ms-auto">

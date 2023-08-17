@@ -186,12 +186,19 @@ class CasesController extends Controller
 
         $results = DB::select('CALL enterCase(?,?)',[$caseID, $userID]);
         // return $results;
-        // 處理檔案編碼
+        //* 處理檔案編碼
         $results[0]->image = explode(',', $results[0]->image);
+
         for($i = 0; $i < count($results[0]->image); $i++){
-            $results[0]->image[$i] = base64_encode(Storage::get($results[0]->image[$i]));
+            //* handle aws s3 file
+            if(substr( $results[0]->image[$i],0,5) === 'https') {
+                $results[0]->image[$i] = $results[0]->image[$i];
+            }else{
+             //* handle local storage file
+                $results[0]->image[$i] = base64_encode(Storage::get($results[0]->image[$i]));
+            }
         }
-        // 處理頭像編碼
+        //* 處理頭像編碼
         $results[0]->profilePhoto = base64_encode(Storage::get($results[0]->profilePhoto));
         return $results;
     }

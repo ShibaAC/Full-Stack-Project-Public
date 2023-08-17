@@ -5,6 +5,7 @@ import Case from "../axios/Case";
 import { GlobelDate } from "../App";
 import Payment from "../axios/Payment";
 import Auth from "../axios/Auth";
+import head from "../imgs/head.png";
 
 function UserInfo(props) {
   const { caseID } = useParams();
@@ -94,12 +95,17 @@ function UserInfo(props) {
       {/* 案主資訊 */}
       <h1 className="text-center">案主資訊</h1>
       <div className="d-flex justify-content-evenly">
-        <img
-          className="caseOwnerImg"
-          src={`data:image/${fileType(profilePhoto)};base64, ${profilePhoto}`}
-          width={"100"}
-          alt="img"
-        />
+        {profilePhoto === "" ? (
+          <img alt="img" src={head} width={150} />
+        ) : (
+          <img
+            className="caseOwnerImg"
+            src={`data:image/${fileType(profilePhoto)};base64, ${profilePhoto}`}
+            width={"100"}
+            alt="img"
+          />
+        )}
+
         <div className="profile-info">
           {/* <p>XXX股份有限公司</p> */}
           <p>{contactName}</p>

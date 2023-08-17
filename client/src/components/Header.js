@@ -99,6 +99,14 @@ function Header() {
             </li>
             <li class="nav-item dFlex">
               {userinfo ? (
+                <div className="d-flex align-items-center">
+                  <div className="search-icon-container">
+                    <FaSearch
+                      className="search-icon"
+                      size={24}
+                      onClick={handleSearch}
+                    />
+                  </div>
                 <div className="dropdown ms-auto">
                   <Link
                     to="#"
@@ -172,6 +180,7 @@ function Header() {
                       </Link>
                     </li>
                   </ul>
+                </div>
                 </div>
               ) : (
                 <div className="dFlex">

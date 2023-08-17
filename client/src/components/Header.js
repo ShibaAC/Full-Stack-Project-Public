@@ -10,7 +10,6 @@ import "react-toastify/dist/ReactToastify.css";
 import presetHeadPhoto from "../imgs/head.png";
 import { FaSearch } from "react-icons/fa";
 
-
 function Header() {
   const {
     headphoto,
@@ -103,7 +102,7 @@ function Header() {
               {userinfo ? (
                 <div className="d-flex align-items-center">
                   <div className="search-icon-container">
-                    {/* <FaSearch
+                    <FaSearch
                       className="search-icon"
                       size={24}
                       // onClick={handleSearch}

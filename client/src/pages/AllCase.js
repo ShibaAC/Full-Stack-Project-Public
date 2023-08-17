@@ -111,19 +111,32 @@ function AllCase() {
                     }}
                   >
                     {/* 依母類別的預設圖 */}
-                    {item.image !== null ? (
+                    {item.image === null ? (
+                      //* 假如沒有上傳圖片
+                      item.bigClassID === "A" ? (
+                        <img src={logoIamge} alt="img" className="mb-3" />
+                      ) : item.bigClassID === "B" ? (
+                        <img src={skyIamge} alt="img" className="mb-3" />
+                      ) : (
+                        <img src={bookIamge} alt="img" className="mb-3" />
+                      )
+                    ) : //* 有上傳圖片
+                    item.image.substr(0, 5) === "https" ? (
+                      //* if image equal https
                       <img
-                        src={`data:image/jpeg;base64, ${item.image}`} // 加上標頭
+                        src={item.image} //* AWS S3 網址
                         alt="img"
                         className="mb-3"
                       />
-                    ) : item.bigClassID === "A" ? (
-                      <img src={logoIamge} alt="img" className="mb-3" />
-                    ) : item.bigClassID === "B" ? (
-                      <img src={skyIamge} alt="img" className="mb-3" />
                     ) : (
-                      <img src={bookIamge} alt="img" className="mb-3" />
+                      //* if have image
+                      <img
+                        src={`data:image/jpeg;base64, ${item.image}`} //* 加上標頭
+                        alt="img"
+                        className="mb-3"
+                      />
                     )}
+
                     <p>案件標題 : {item.caseName}</p>
                     {item.city && (
                       <p>
@@ -132,7 +145,9 @@ function AllCase() {
                       </p>
                     )}
                     <p>預算: {item.budget}</p>
-                    <p>預計完成日期: {item.deadline? item.deadline: "無指定"}</p>
+                    <p>
+                      預計完成日期: {item.deadline ? item.deadline : "無指定"}
+                    </p>
                     {/* <Link
                       className="moreView"
                       to={`/caseview/${item.caseID}`}

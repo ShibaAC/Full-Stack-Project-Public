@@ -17,6 +17,17 @@ class CasesController extends Controller
         $caseID = (int)$request['caseID'];
         $userID = (int)$request['userID'];
         $name = $request['name'];
+        $category = $request['category'];
+        $subCategory = $request['subCategory'];
+        $budget = (int)$request['budget'];
+        $deadline = $request['deadline'];
+        $city = $request['city'];
+        $subCity = $request['subCity'];
+        $description = $request['description'];
+        $contactName = $request['contactName'];
+        $contactAble = (int)$request['contactAble'];
+        $contactPhone = $request['contactPhone'];
+        $contactTime = $request['contactTime'];
         $status = $request['status'];
         $Files = $request->file('allFiles');
         $allFileName = '';
@@ -97,8 +108,8 @@ class CasesController extends Controller
                 for($j = 0; $j < count($filesName[$i]); $j++) {
                     if(strpos($filesName[$i][$j],'jpg')  !== false|| strpos($filesName[$i][$j],'jpeg')  !== false ){
                         array_push($newFileArray,$filesName[$i][$j]);
+                        break;
                         if(count($newFileArray) === 1){
-                            break;
                         }
                     }
                 }

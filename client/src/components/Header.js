@@ -101,86 +101,86 @@ function Header() {
               {userinfo ? (
                 <div className="d-flex align-items-center">
                   <div className="search-icon-container">
-                    <FaSearch
+                    {/* <FaSearch
                       className="search-icon"
                       size={24}
                       onClick={handleSearch}
-                    />
+                    /> */}
                   </div>
-                <div className="dropdown ms-auto">
-                  <Link
-                    to="#"
-                    className="d-block link-dark text-decoration-none"
-                    id="dropdownUser2"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    <img
-                      src={
-                        headphoto.charAt(23) === "R" ||
-                        headphoto.charAt(23) === "i" ||
-                        headphoto.charAt(23) === "/" ||
-                        headphoto.charAt(24) === "R" ||
-                        headphoto.charAt(24) === "i" ||
-                        headphoto.charAt(24) === "/"
-                          ? headphoto
-                          : presetHeadPhoto
-                      }
-                      style={{ objectFit: "cover" }}
-                      alt="mdo"
-                      width="40"
-                      height="40"
-                      className="rounded-circle rwdPhoto"
-                    />
-                  </Link>
-                  <ul
-                    className="dropdown-menu text-small shadow rwdhead"
-                    aria-labelledby="dropdownUser2"
-                  >
-                    <li>
-                      <Link
-                        className="dropdown-item rwdWord"
-                        to="/personalinfo"
-                        onClick={() => setInfoData("1")}
-                      >
-                        我的帳號
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        className="dropdown-item rwdWord"
-                        to="/personalinfo"
-                        onClick={() => setInfoData("3")}
-                      >
-                        我的案件
-                      </Link>
-                    </li>
-                    <li>
-                      <Link className="dropdown-item rwdWord" to="/chatRoom">
-                        聊天室
-                        <span
-                          className={
-                            unreadNotifications?.length === 0
-                              ? null
-                              : "chatRoomNotification"
-                          }
-                        ></span>
-                      </Link>
-                    </li>
-                    <li>
-                      <hr className="dropdown-divider" />
-                    </li>
-                    <li>
-                      <Link
-                        className="dropdown-item rwdWord"
-                        to=""
-                        onClick={handleLogout}
-                      >
-                        登出
-                      </Link>
-                    </li>
-                  </ul>
-                </div>
+                  <div className="dropdown ms-auto">
+                    <Link
+                      to="#"
+                      className="d-block link-dark text-decoration-none"
+                      id="dropdownUser2"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      <img
+                        src={
+                          headphoto.charAt(23) === "R" ||
+                          headphoto.charAt(23) === "i" ||
+                          headphoto.charAt(23) === "/" ||
+                          headphoto.charAt(24) === "R" ||
+                          headphoto.charAt(24) === "i" ||
+                          headphoto.charAt(24) === "/"
+                            ? headphoto
+                            : presetHeadPhoto
+                        }
+                        style={{ objectFit: "cover" }}
+                        alt="mdo"
+                        width="40"
+                        height="40"
+                        className="rounded-circle rwdPhoto"
+                      />
+                    </Link>
+                    <ul
+                      className="dropdown-menu text-small shadow rwdhead"
+                      aria-labelledby="dropdownUser2"
+                    >
+                      <li>
+                        <Link
+                          className="dropdown-item rwdWord"
+                          to="/personalinfo"
+                          onClick={() => setInfoData("1")}
+                        >
+                          我的帳號
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          className="dropdown-item rwdWord"
+                          to="/personalinfo"
+                          onClick={() => setInfoData("3")}
+                        >
+                          我的案件
+                        </Link>
+                      </li>
+                      <li>
+                        <Link className="dropdown-item rwdWord" to="/chatRoom">
+                          聊天室
+                          <span
+                            className={
+                              unreadNotifications?.length === 0
+                                ? null
+                                : "chatRoomNotification"
+                            }
+                          ></span>
+                        </Link>
+                      </li>
+                      <li>
+                        <hr className="dropdown-divider" />
+                      </li>
+                      <li>
+                        <Link
+                          className="dropdown-item rwdWord"
+                          to=""
+                          onClick={handleLogout}
+                        >
+                          登出
+                        </Link>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               ) : (
                 <div className="dFlex">

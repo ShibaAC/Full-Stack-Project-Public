@@ -8,6 +8,8 @@ import headerLogo from "../imgs/header_logo.png";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import presetHeadPhoto from "../imgs/head.png";
+import { FaSearch } from "react-icons/fa";
+
 
 function Header() {
   const {

@@ -1,49 +1,49 @@
 .recommend {
-    /* height: 200px; */
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+  /* height: 200px; */
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 .recommend-content {
-    flex-wrap: wrap;
-    min-height: 200px;
+  flex-wrap: wrap;
+  min-height: 200px;
 }
 
 .recommend-content-box {
-    font-size: 1.5rem;
-    border: 3px solid #ffa500;
-    border-radius: 10px;
-    width: 85%;
-    min-height: 150px;
-    margin: 1rem auto;
-    padding: 0.5rem;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  font-size: 1.5rem;
+  border: 3px solid #ffa500;
+  border-radius: 10px;
+  width: 100%;
+  min-height: 150px;
+  margin: 1rem auto;
+  padding: 0.5rem;
+  cursor: pointer;
+  /* display: flex; */
+  /* justify-content: space-between; */
+  /* align-items: center; */
 }
 
 .recommend-content-box:hover {
-    width: 87%;
+  width: 87%;
 }
 
 .recommend-content-box-btn {
-    font-size: 1rem;
-    border-radius: 5px;
-    border: 1px solid #000;
-    margin: 0px 15px;
-    padding: 0.5rem
+  font-size: 1.5rem;
+  border-radius: 5px;
+  border: 1px solid #000;
+  margin: 0px 15px;
+  padding: 0.5rem;
 }
 
 .recommend-content-box-btn:hover {
-    color: rgb(34, 34, 212);
+  color: rgb(34, 34, 212);
 }
 
 .selfRecommended {
-    width: 300px;
-    border: 1px solid #000;
-    min-height: 20px;
-    padding-top: .5rem;
-    padding-left: 1rem;
-    border-radius: 5px;
+  width: 300px;
+  border: 1px solid #000;
+  min-height: 20px;
+  padding-top: 0.5rem;
+  padding-left: 1rem;
+  border-radius: 5px;
 }

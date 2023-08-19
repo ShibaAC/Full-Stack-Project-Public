@@ -89,7 +89,9 @@ function CaseRecommend(porps) {
   return (
     <div className="recommend">
       <div className="recommend-tile">
-        <h1 style={{fontWeight: 800}}>{userEqual ? "報價人員" : "為您推薦案子"}</h1>
+        <h1 style={{ fontWeight: 800 }}>
+          {userEqual ? "報價人員" : "為您推薦案子"}
+        </h1>
       </div>
       <div className="recommend-content">
         {/* 三元表達式 假如【userEqual】為【True】就執行【:】前面，反之【userEqual】為【False】就執行【:】後面 */}
@@ -102,7 +104,7 @@ function CaseRecommend(porps) {
               bridder.map((item, index) => (
                 <div className="recommend-content-box" key={index}>
                   <div>
-                    <p>{item.userName}</p>
+                    <div>{item.userName}</div>
                     <p>報價金額 : {item.quotation}</p>
                     <p>自我推薦 : </p>
                     <p className="selfRecommended">{item.selfRecommended}</p>
@@ -134,14 +136,14 @@ function CaseRecommend(porps) {
                   key={item["caseID"]}
                   onClick={() => handleDrictCaseView(item["caseID"])}
                 >
-                  <p>案件標題: {item.caseName}</p>
-                  <p>
-                  地點: 
+                  <div>案件標題： {item.caseName}</div>
+                  <div>
+                    地點：
                     {item.city}
                     {item.district}
-                  </p>
-                  <p>預計完成金額: {item.budget}</p>
-                  <p>預計完成時間: {item.deadline}</p>
+                  </div>
+                  <div>預計完成金額： {item.budget}元</div>
+                  <div>預計完成時間：{item.deadline}</div>
                 </div>
               ))
             ) : (

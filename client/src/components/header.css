@@ -112,6 +112,12 @@ a {
   right: 1rem;
 }
 
+.search-icon-container {
+  margin-right: 30px; 
+}
+
+
+
 @media (max-width: 992px) {
   .nav-item {
     background-color: #ffa500;

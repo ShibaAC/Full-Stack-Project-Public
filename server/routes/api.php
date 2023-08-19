@@ -108,6 +108,10 @@ Route::post('backstage/deluser', [backstageController::class, '']);//ban使用�
 Route::post('backstage/delcase', [backstageController::class, 'rootDelCase']);//下架案件
 // Route::get('backstage/allcase', [backstageController::class, 'rootCheckCase']); 
 Route::get('backstage/CasePage', [backstageController::class, 'rootCasePage']);//取案件頁數
+Route::get('backstage/searchUser', [backstageController::class, 'searchUser']);//
+Route::get('backstage/searchCase', [backstageController::class, 'searchCase']);//
+//後台的lineBot function傳名字過去就好不用再加{}
+Route::get('backstage/callLineBot/{functionName}', [backstageController::class, 'callLineBot']);
 
 
 //忘記密碼

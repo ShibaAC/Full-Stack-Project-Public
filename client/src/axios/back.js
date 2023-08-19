@@ -31,5 +31,15 @@ class back {
   getcasepage() {
     return axios.get(API_URL + "/backstage/CasePage", {});
   }
+  line(lineID, caseName) {
+    console.log("進到api了");
+    console.log("API內", lineID, caseName);
+    return axios.get(API_URL + "/backstage/callLineBot/delcase", {
+      params: {
+        lineID,
+        caseName,
+      },
+    });
+  }
 }
 export default new back();

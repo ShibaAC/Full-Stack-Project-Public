@@ -58,18 +58,29 @@ function Backstage() {
   const { AllCase1, setAllCase1, totalPages, setTotalPages } =
     useContext(GlobelDate);
   const [page, setPage] = useState(1);
-  const [state, setState] = useState(0);
+  const [state, setState] = useState(1);
   const [AllUsers, setAllUsers] = useState([]);
 
-  const handleCaseCancel = async (caseID) => {
+  const handleCaseCancel = async (caseID, caseName, lineID) => {
     try {
       const result = await back.delcase(caseID);
-      alert(result["data"][0]["result"]);
+      console.log(result);
+      handleButtonClick(lineID, caseName); // 在這邊叫handleButtonClick 把caseName傳進去叫他傳給後端再給python
       updateCaseData();
     } catch (err) {
       console.log(err);
     }
   };
+  ///////////////
+  const handleButtonClick = (lineID, caseName) => {
+    console.log("caseName＝", caseName);
+    console.log("lineID＝", lineID);
+    back.line(lineID, caseName).then((result) => {
+      console.log("api結果=", result);
+    });
+  };
+
+  ////////////////////////////////
 
   const updateCaseData = () => {
     back.allcase(page).then((result) => {
@@ -95,10 +106,52 @@ function Backstage() {
       setAllUsers(result["data"]);
     });
     back.allcase(page).then((result) => {
+      console.log(result);
       setAllCase1(result["data"]);
     });
     getcasepage(); // Call getcasepage to update total pages
   }, [page]);
+
+  ///////////////////
+  const [searchTerm, setSearchTerm] = useState(""); // 新增搜尋關鍵字狀態
+  const [searchResults, setSearchResults] = useState([]); // 新增搜尋結果狀態
+
+  const handleSearch = (e) => {
+    const keyword = e.target.value;
+    setSearchTerm(keyword);
+    //console.log(keyword);
+    // 使用過濾來篩選搜尋結果
+    const filteredResults = AllUsers.filter((user) =>
+      user.userName.includes(keyword)
+    );
+    console.log(filteredResults);
+    setSearchResults(filteredResults);
+  };
+
+  ///////////////////
+
+  const [caseSearchTerm, setCaseSearchTerm] = useState(""); // 新增案件搜尋關鍵字狀態
+  const [caseSearchResults, setCaseSearchResults] = useState([]); // 新增案件搜尋結果狀態
+
+  const handleCaseSearch = (e) => {
+    const keyword = e.target.value;
+    setCaseSearchTerm(keyword);
+
+    // 使用過濾來篩選案件搜尋結果
+    const filteredCaseResults = AllCase1.filter((caseItem) =>
+      caseItem.caseName.includes(keyword)
+    );
+    setCaseSearchResults(filteredCaseResults);
+  };
+
+  //////////////////////////
+  const handleClearSearch = () => {
+    setSearchTerm(""); // 清空搜尋關鍵字
+  };
+  const handleClearSearchCase = () => {
+    setCaseSearchTerm(""); // 清空搜尋關鍵字
+  };
+  /////////////
 
   return (
     <div className="container">
@@ -114,11 +167,22 @@ function Backstage() {
       >
         所有案件
       </button>
-
       {state === 1 && (
         <div className="allContainer">
-          <input type="text" placeholder="搜尋案件或使用者" />
-
+          <div className="searchContainer">
+            <input
+              type="text"
+              placeholder="搜尋案件或使用者"
+              value={searchTerm}
+              onChange={handleSearch}
+              className="searchButton"
+            />
+            {searchTerm && (
+              <button className="clearButton" onClick={handleClearSearch}>
+                <span> × </span>
+              </button>
+            )}
+          </div>
           <div>
             <h2>所有使用者</h2>
           </div>
@@ -134,28 +198,60 @@ function Backstage() {
               </tr>
             </thead>
             <tbody>
-              {AllUsers.map((user, index) => (
-                <tr class="bodyClass">
-                  <td className="tdClass">{user.userName}</td>
-                  <td className="tdClass">{user.email}</td>
-                  <td className="tdClass">{user.phone}1</td>
-                  <td className="tdClass">{user.publish}1</td>
-                  <td className="tdClass">{user.finish}1</td>
-                  <td className="tdClass">
-                    <button className="buttonClass">下架</button>
-                  </td>
-                </tr>
-              ))}
+              {searchTerm ? (
+                <>
+                  {searchResults.map((result) => (
+                    <tr class="bodyClass">
+                      <td className="tdClass">{result.userName}</td>
+                      <td className="tdClass">{result.email}</td>
+                      <td className="tdClass">{result.phone}</td>
+                      <td className="tdClass">{result.publish}</td>
+                      <td className="tdClass">{result.finish}</td>
+                      <td className="tdClass">
+                        <button className="buttonClass">封鎖</button>
+                      </td>
+                    </tr>
+                  ))}
+                </>
+              ) : (
+                <>
+                  {AllUsers.map((user, index) => (
+                    <tr class="bodyClass trClass">
+                      <td className="tdClass">{user.userName}</td>
+                      <td className="tdClass">{user.email}</td>
+                      <td className="tdClass">{user.phone}</td>
+                      <td className="tdClass">{user.publish}</td>
+                      <td className="tdClass">{user.finish}</td>
+                      <td className="tdClass">
+                        <button className="buttonClass">封鎖</button>
+                      </td>
+                    </tr>
+                  ))}
+                </>
+              )}
             </tbody>
           </table>
         </div>
       )}
       {state === 2 && (
         <div className="allContainer">
-          <input type="text" placeholder="搜尋案件或使用者" />
-
+          <div className="searchContainer">
+            <input
+              type="text"
+              placeholder="搜尋案件或使用者"
+              value={caseSearchTerm}
+              onChange={handleCaseSearch}
+              className="searchButton"
+            />
+            {caseSearchTerm && (
+              <button className="clearButton" onClick={handleClearSearchCase}>
+                <span> × </span>
+              </button>
+            )}
+          </div>
           <div>
             <h2>所有案件</h2>
+            {/* <button onClick={handleButtonClick}>呼叫 API</button> */}
           </div>
           <table className="allTable">
             <thead>
@@ -169,45 +265,62 @@ function Backstage() {
               </tr>
             </thead>
             <tbody>
-              {AllCase1.map((Allcase, index) => (
-                <tr className="bodyClass">
-                  <td className="tdClass">{Allcase.caseName}</td>
-                  <td className="tdClass">{Allcase.Class}</td>
-                  <td className="tdClass">{Allcase.location}</td>
-                  <td className="tdClass">{Allcase.caseStatus}</td>
-                  <td className="tdClass">{Allcase.userName}</td>
-                  <td className="tdClass">
-                    <button
-                      className="buttonClass"
-                      onClick={() => {
-                        handleCaseCancel(Allcase.caseID);
-                        console.log(Allcase.caseID);
-                      }}
-                    >
-                      下架
-                    </button>
-                  </td>
-                </tr>
-              ))}
+              {caseSearchTerm ? (
+                <>
+                  {caseSearchResults.map((Allcase, index) => (
+                    <tr className="bodyClass">
+                      <td className="tdClass">{Allcase.caseName}</td>
+                      <td className="tdClass">{Allcase.Class}</td>
+                      <td className="tdClass">{Allcase.location}</td>
+                      <td className="tdClass">{Allcase.caseStatus}</td>
+                      <td className="tdClass">{Allcase.userName}</td>
+                      <td className="tdClass">
+                        <button
+                          className="buttonClass"
+                          onClick={() => {
+                            handleCaseCancel(Allcase.caseID, Allcase.lineID);
+                            console.log(Allcase.caseID, Allcase.lineID);
+                          }}
+                        >
+                          下架
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </>
+              ) : (
+                <>
+                  {AllCase1.map((Allcase, index) => (
+                    <tr className="bodyClass trClass">
+                      <td className="tdClass">{Allcase.caseName}</td>
+                      <td className="tdClass">{Allcase.Class}</td>
+                      <td className="tdClass">{Allcase.location}</td>
+                      <td className="tdClass">{Allcase.caseStatus}</td>
+                      <td className="tdClass">{Allcase.userName}</td>
+                      <td className="tdClass">
+                        <button
+                          className="buttonClass"
+                          onClick={() => {
+                            handleCaseCancel(
+                              Allcase.caseID,
+                              Allcase.caseName,
+                              Allcase.lineID
+                            );
+                            console.log(Allcase.caseID);
+                          }}
+                        >
+                          下架
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </>
+              )}
             </tbody>
           </table>
         </div>
-
-        // <div>
-        //   <h2>所有案件</h2>
-        //   <ul>
-        //     {AllCase.map((Allcase, index) => (
-        //       <li key={index}>
-        //         <li>{Allcase.caseName}</li>
-        //         <li>{Allcase.Class}</li>
-        //         <li>{Allcase.location}</li>
-        //         <li>{Allcase.caseStatus}</li>
-        //         <li>{Allcase.userName}</li>
-        //       </li>
-        //     ))}
-        //   </ul>
-        // </div>
       )}
+
       <PageButtons
         totalPages={totalPages}
         currentPage={page}

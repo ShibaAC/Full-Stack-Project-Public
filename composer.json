@@ -1,0 +1,6 @@
+{
+    "require": {
+        "symfony/process": "^6.3",
+        "robertogallea/laravel-python": "^0.1.1"
+    }
+}

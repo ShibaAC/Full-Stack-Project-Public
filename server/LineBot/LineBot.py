@@ -41,12 +41,26 @@ def delcase(lineID, caseName=None):  # 接收 caseName 参数
         lineID, TextSendMessage(text=response_message))
 
 
-def another_function():
-    return {"message": "Executing another_function"}
+def newBidder():
+    if caseName:
+        # 如果{caseName}內要帶值的話 要在前面加一個f讓他變成 f-string才可以用
+        response_message = f'有新的專家對您的案件：『 {caseName} 』報價囉！趕快上線確認看看吧！'
+    else:
+        response_message = 'Hello from delcase function!'
+
+    line_bot_api.push_message(
+        lineID, TextSendMessage(text=response_message))
 
 
-def yet_another_function():
-    return {"message": "Executing yet_another_function"}
+def caseStep(lineID, caseName, completedSteps, totalSteps):
+    if caseName:
+        # 如果{caseName}內要帶值的話 要在前面加一個f讓他變成 f-string才可以用
+        response_message = f'您的案件：『 {caseName} 』有新進度囉！\n已完成進度 ( {completedSteps} / {totalSteps} ) 趕快上線確認看看吧！'
+    else:
+        response_message = 'Hello from delcase function!'
+
+    line_bot_api.push_message(
+        lineID, TextSendMessage(text=response_message))
 
 
 # 使用 sys.argv 取得命令行參數有幾個
@@ -59,14 +73,16 @@ else:
     caseName = sys.argv[2]
     # 第三個設lineID
     lineID = sys.argv[3]
+    completedSteps = sys.argv[4]
+    totalSteps = sys.argv[5]
 
     # 用function_name判定要叫哪個function
     if function_name == "delcase":
         response = delcase(lineID, caseName)
-    elif function_name == "another_function":
-        response = another_function()
-    elif function_name == "yet_another_function":
-        response = yet_another_function()
+    elif function_name == "newBidder":
+        response = newBidder()
+    elif function_name == "caseStep":
+        response = caseStep(lineID, caseName, completedSteps, totalSteps)
     else:
         response = {"error": "Unknown function: " + function_name}
 
@@ -140,6 +156,6 @@ print(json.dumps(response))
 # # ... 其他 Flask 相關程式碼 ...
 
 
-# if __name__ == "__main__":
-#     app.run()
-#     app.run(host='0.0.0.0', port=5000)
+if __name__ == "__main__":
+    app.run()
+    app.run(host='0.0.0.0', port=5000)

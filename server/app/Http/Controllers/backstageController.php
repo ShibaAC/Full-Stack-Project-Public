@@ -64,7 +64,7 @@ class backstageController extends Controller
     public function callLineBot($functionName, Request $request) {
         $caseName = $request->input('caseName'); // 抓輸入的caseName
         $lineID = $request->input('lineID');
-        //return $caseName;
+        // return $caseName;
         // 假設虛擬環境的路徑以及 LineBot.py 的路徑
         $virtualEnvPath = "/Applications/XAMPP/xamppfiles/htdocs/Full-Stack-Project/myenv/bin/activate";
         $lineBotScriptPath = "/Applications/XAMPP/xamppfiles/htdocs/Full-Stack-Project/server/LineBot/LineBot.py";

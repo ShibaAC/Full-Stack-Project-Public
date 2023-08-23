@@ -76,7 +76,7 @@ function Working(props) {
   const handleCaseStep = () => {
     Auth.getCaseStep(JSON.parse(localStorage.getItem("userID")))
       .then((result) => {
-        console.log(result);
+        // console.log(result);
       })
       .catch((err) => {
         console.log(err);
@@ -127,6 +127,14 @@ function Working(props) {
     ) {
       Auth.stepConfirm(localStorage.getItem("userID"), caseID, deadLine)
         .then((result) => {
+          // console.log(result);
+          const lineID = result["data"][0]["lineID"];
+          const caseName = result["data"][0]["caseName"];
+          const completedSteps = result["data"][0]["已完成進度"];
+          const totalSteps = result["data"][0]["總進度"];
+          console.log(lineID, caseName, completedSteps, totalSteps);
+          // Call stepCallLineBot function with the extracted data
+          Auth.stepCallLineBot(lineID, caseName, completedSteps, totalSteps);
           if (
             result["data"][0]["result"] === "案主確認完成" &&
             allSchedule === caseSchedule + 1
@@ -137,6 +145,7 @@ function Working(props) {
         .catch((err) => {
           console.error(err);
         });
+
       setTimeout(() => setRecall(!recall), 500);
     }
   };

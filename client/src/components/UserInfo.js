@@ -38,9 +38,35 @@ function UserInfo(props) {
   const [caseOwnerEdu, setCaseOwnerEdu] = useState(null);
   const [caseOwnerIntro, setCaseOwnerIntro] = useState(null);
 
+  ////////////////////////////////////////////////////////
+  //傳姪給linebot
+  const handleBidderLine = () => {
+    Auth.checkProfile(bulidCaseUserID).then((result) => {
+      console.log("checkProfile 案主", result);
+
+      if (result["data"].length !== 0) {
+        setCaseOwnerEdu(result["data"][0]["education"]);
+        setCaseOwnerIntro(result["data"][0]["selfIntroduction"]);
+        const lineIDFromResult = result["data"][0].lineID; // 注意这里的索引
+
+        // 调用callClientLine函数发送lineID和caseName到后端
+        Auth.callClientLine(lineIDFromResult, caseName)
+          .then((response) => {
+            console.log("callClientLine response:", response);
+          })
+          .catch((error) => {
+            console.error("callClientLine error:", error);
+            alert(error);
+          });
+      }
+    });
+  };
+
+  ////////////////////////////////////////////////////////
+
   useEffect(() => {
     Auth.checkProfile(bulidCaseUserID).then((result) => {
-      console.log("checkProfile", result);
+      console.log("checkProfile 案主", result);
       if (result["data"].length !== 0) {
         setCaseOwnerEdu(result["data"][0]["education"]);
         setCaseOwnerIntro(result["data"][0]["selfIntroduction"]);
@@ -61,7 +87,7 @@ function UserInfo(props) {
   };
 
   const handleBidder = () => {
-    // 將訂單資訊傳入ECPay
+    //將訂單資訊傳入ECPay;
     Payment.pay(MerchantTradeNo, ItemName, TotalAmount, TradeDesc, caseID)
       .then((result) => {
         console.log(result["data"]);
@@ -71,7 +97,7 @@ function UserInfo(props) {
       .catch((err) => {
         console.log(err);
       });
-    // 將報價資訊寫入DB
+    //將報價資訊寫入DB;
     Case.newBidder(
       currentCaseId,
       JSON.parse(localStorage.getItem("userID")),
@@ -83,12 +109,15 @@ function UserInfo(props) {
         console.log(result);
         // alert(result["data"][0]["result"]);
         setInfoData(4);
+
         navigate("/personalinfo");
       })
       .catch((error) => {
         console.error(error);
         alert(error);
       });
+    handleBidderLine();
+    ////////
   };
   return (
     <div className="user-info">

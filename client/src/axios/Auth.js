@@ -217,7 +217,7 @@ class Auth {
       },
     });
   }
-  
+
   //忘記密碼傳送Email
   forgetPwd(changeEmail) {
     return axios.get(API_URL + "/Forgetpwd", {
@@ -243,47 +243,67 @@ class Auth {
         password,
         verCode,
       },
-    }); 
+    });
   }
 
   //google登入
   googleLogin(userName, email, photoURL) {
     return axios.post(API_URL + "/googleLogin", {
-      userName, 
-      email, 
+      userName,
+      email,
       photoURL,
     });
   }
 
   // 進到我的收藏
   enterFavorite(userID, page) {
-    return axios.post(API_URL + '/enterFavorite', {
+    return axios.post(API_URL + "/enterFavorite", {
       userID,
       page,
     });
   }
 
-  // icon狀態   + '/collectionState' 
-  collectionState(userID,caseID) {
+  // icon狀態   + '/collectionState'
+  collectionState(userID, caseID) {
     // const data ={
     //    userID,
     //    caseID
     // }
-    // return axios.post('http://localhost/Full-Stack-Project/server/public/api/collectionState ',data 
+    // return axios.post('http://localhost/Full-Stack-Project/server/public/api/collectionState ',data
     // {
     // myuserID,
     //   mycaseID,
     // }
-    return axios.post(API_URL + '/collectionState', {
+    return axios.post(API_URL + "/collectionState", {
       userID,
       caseID,
     });
   }
+  //////////////明天要修改下面的api網址 然後去新增後端
+  //lineBot的
+  callClientLine(lineID, caseName) {
+    console.log("進到api了");
+    console.log("API內", lineID, caseName);
+    return axios.get(API_URL + "/cases/newBidderCallLine/newBidder", {
+      params: {
+        lineID,
+        caseName,
+      },
+    });
+  }
 
-
-
-
-
+  stepCallLineBot(lineID, caseName, completedSteps, totalSteps) {
+    console.log("進到api了");
+    console.log("API內", lineID, caseName, completedSteps, totalSteps);
+    return axios.get(API_URL + "/caseStepConfirmCallLine/caseStep", {
+      params: {
+        lineID,
+        caseName,
+        completedSteps,
+        totalSteps,
+      },
+    });
+  }
 }
 
 // new 一個 Auth 的實例 ，export default 默認導出 供其他程式直接引用

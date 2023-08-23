@@ -349,7 +349,7 @@ class InformationController extends Controller
         $userID = $request['userID'];
         $caseID = $request['caseID'];
         $deadLine= $request['deadLine'];
-        // return $caseID;
+        // return [$userID, $caseID, $deadLine];
         $result = DB::select('Call stepConfirm(?, ?, ?)', [$userID, $caseID, $deadLine]);
         // return '123';
         return $result;
@@ -360,5 +360,23 @@ class InformationController extends Controller
         $userID = $request['userID'];
         $result = DB::select('Call bidderProfile(?)', [$userID]);
         return $result;
+    }
+
+
+    public function callLineBot($functionName, Request $request) {
+        $caseName = $request->input('caseName'); // 抓輸入的caseName
+        $lineID = $request->input('lineID');
+        $completedSteps = $request->input('completedSteps');
+        $totalSteps = $request->input('totalSteps');
+        // return $caseName;
+        // 假設虛擬環境的路徑以及 LineBot.py 的路徑
+        $virtualEnvPath = "/Applications/XAMPP/xamppfiles/htdocs/Full-Stack-Project/myenv/bin/activate";
+        $lineBotScriptPath = "/Applications/XAMPP/xamppfiles/htdocs/Full-Stack-Project/server/LineBot/LineBot.py";
+        // 切換到虛擬環境並執行 LineBot.py 並傳遞命令行參數 然後指定要執行的函數 要帶給函數的參數
+        $command = "source $virtualEnvPath && python3 $lineBotScriptPath $functionName $caseName $lineID $completedSteps $totalSteps";
+        // return $command;
+        //執行CLI指令
+        $pythonResult = shell_exec($command);
+        return response()->json(['result' => $pythonResult]);
     }
 }
